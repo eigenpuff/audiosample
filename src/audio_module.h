@@ -7,10 +7,12 @@
 
 #ifndef AudioModule_h
 #define AudioModule_h
-
+#include <fmod/fmod.hpp>
 
 class AudioSubmodule
 {
+	FMOD::System *system = nullptr;
+	
 public:
 	void Init();
 	void Update();
