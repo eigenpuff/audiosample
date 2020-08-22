@@ -11,10 +11,16 @@
 #include <fmod/fmod_errors.h>
 #include <stdio.h>
 #include <stdlib.h>
+#include "presentation_modules.h"
 
 #define StackAlloc alloca
 
+AudioSubmodule * AudioSubmodule::sInstance;
 
+inline void PostFMODError(FMOD_RESULT result)
+{
+	DebugSubmodule::Instance()->SetDebugString(FMOD_ErrorString(result));
+}
 	
 AudioStream::AudioStream(FMOD::System * system) :
 	system(system)
@@ -32,6 +38,7 @@ AudioStream::AudioStream(FMOD::System * system) :
 	info.format = FMOD_SOUND_FORMAT_PCMFLOAT;
 
 	errorCode = system->createStream((const char *) dataBuffer, mode, &info, &handle);
+	PostFMODError(errorCode);
 }
 
 AudioStream::~AudioStream()
@@ -68,9 +75,7 @@ void AudioStream::WriteSamples(float dt, WriteFunction function)
 	const size_t allocSize = framesToWrite * channels * sizeof(float);
 	const int32_t numFrames = NumFrames();
 	
-	
-	float * tempBuffer = (float*) alloca ( allocSize );
-	//float * tempBuffer = (float*) StackAlloc( allocSize );
+	float * tempBuffer = (float*) StackAlloc( allocSize );
 	function(tempBuffer, channels, framesToWrite, hertz, writeTime);
 	
 	if (writeCursor + framesToWrite > NumFrames())
@@ -153,13 +158,13 @@ void AudioSubmodule::Init()
 	result = FMOD::System_Create(&system);      // Create the main system object.
 	if (result != FMOD_OK)
 	{
-		printf("FMOD error! (%d) %s\n", result, FMOD_ErrorString(result));
+		PostFMODError(result);
 	}
 
 	result = system->init(32, FMOD_INIT_NORMAL, 0);    // Initialize FMOD.
 	if (result != FMOD_OK)
 	{
-		printf("FMOD error! (%d) %s\n", result, FMOD_ErrorString(result));
+		PostFMODError(result);
 	}
 }
 

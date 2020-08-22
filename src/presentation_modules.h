@@ -15,7 +15,17 @@
 
 class GraphicsSubmodule
 {
+	static GraphicsSubmodule * sInstance;
+
 public:
+	GraphicsSubmodule()
+	{
+		BX_ASSERT(sInstance == nullptr);
+		sInstance = this;
+	}
+	
+	static GraphicsSubmodule * Instance() { return sInstance; }
+	
 	uint32_t m_width;
 	uint32_t m_height;
 	uint32_t m_reset;
@@ -33,7 +43,17 @@ public:
 
 class UiSubmodule
 {
+	static UiSubmodule * sInstance;
+	
 public:
+	UiSubmodule()
+	{
+		BX_ASSERT(sInstance == nullptr);
+		sInstance = this;
+	}
+	
+	static UiSubmodule * Instance() { return sInstance; }
+	
 	uint16_t m_width;
 	uint16_t m_height;
 
@@ -47,8 +67,22 @@ public:
 
 class DebugSubmodule
 {
+	static DebugSubmodule * sInstance;
+	const char * debugStr = nullptr;
+	
 public:
 	uint32_t m_debug;
+	
+	DebugSubmodule()
+	{
+		BX_ASSERT(sInstance == nullptr);
+		sInstance = this;
+	}
+	
+	static DebugSubmodule *Instance() { return sInstance; }
+	
+	void SetDebugString(const char * debugStr);
+	const char * GetDebugString();
 	
 	void Init(uint32_t debug);
 	void Update();

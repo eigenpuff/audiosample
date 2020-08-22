@@ -11,6 +11,7 @@
 #include <fmod/fmod.hpp>
 #include <stdint.h>
 #include <vector>
+#include "bgfx_utils.h"
 
 using WriteFunction = void (*) (float * buffer, int32_t numChannels, int32_t numFrames, int32_t hertz, float startTime);
 
@@ -61,7 +62,17 @@ class AudioSubmodule
 	
 	AudioPool pool;
 	
+	static AudioSubmodule * sInstance;
+	
 public:
+	
+	AudioSubmodule()
+	{
+		BX_ASSERT(sInstance == nullptr);
+		sInstance = this;
+	}
+	
+	static AudioSubmodule *Instance() { return sInstance; }
 
 	AudioStream * CreateAudioStream();
 	void DestroyAudioStreams();

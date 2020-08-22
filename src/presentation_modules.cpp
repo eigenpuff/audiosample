@@ -8,11 +8,25 @@
 #include "presentation_modules.h"
 #include "imgui/imgui.h"
 
+DebugSubmodule * DebugSubmodule::sInstance;
+UiSubmodule * UiSubmodule::sInstance;
+GraphicsSubmodule * GraphicsSubmodule::sInstance;
+
 void DebugSubmodule::Init(uint32_t debug)
 {
 	m_debug = debug;
 	// Enable debug text.
 	bgfx::setDebug(debug);
+}
+
+void DebugSubmodule::SetDebugString(const char * str)
+{
+	debugStr = str;
+}
+
+const char * DebugSubmodule::GetDebugString()
+{
+	return debugStr;
 }
 
 void DebugSubmodule::Update()
@@ -120,6 +134,10 @@ void GraphicsSubmodule::Update()
 		, stats->textHeight
 		);
 	*/
+	if (DebugSubmodule::Instance()->GetDebugString())
+	{
+		bgfx::dbgTextPrintf(0, 2, 0x0f, DebugSubmodule::Instance()->GetDebugString());
+	}
 	// Advance to next frame. Rendering thread will be kicked to
 	// process submitted rendering primitives.
 	bgfx::frame();
