@@ -25,20 +25,33 @@ inline void PostFMODError(FMOD_RESULT result)
 AudioStream::AudioStream(FMOD::System * system) :
 	system(system)
 {
-	FMOD_MODE mode = FMOD_OPENMEMORY_POINT | FMOD_CREATESTREAM | FMOD_OPENRAW | FMOD_LOOP_NORMAL;
+	if (!system)
+		return;
+	
+	if (AudioSubmodule::Instance()->GetError() == FMOD_OK)
+	{
+		FMOD_MODE mode = FMOD_OPENMEMORY_POINT | FMOD_CREATESTREAM | FMOD_OPENRAW | FMOD_LOOP_NORMAL;
 
-	dataBuffer = (float *) calloc(NumSamples(), sizeof(float));
-	dataLength = size_t( NumSamples() * sizeof(float) );
+		dataBuffer = (float *) calloc(NumSamples(), sizeof(float));
+		dataLength = size_t( NumSamples() * sizeof(float) );
 
-	FMOD_CREATESOUNDEXINFO info = {0};
-	info.cbsize = sizeof(FMOD_CREATESOUNDEXINFO);
-	info.length = timeLength;
-	info.numchannels = channels;
-	info.defaultfrequency = hertz;
-	info.format = FMOD_SOUND_FORMAT_PCMFLOAT;
+		FMOD_CREATESOUNDEXINFO info = {0};
+		info.cbsize = sizeof(FMOD_CREATESOUNDEXINFO);
+		info.length = timeLength;
+		info.numchannels = channels;
+		info.defaultfrequency = hertz;
+		info.format = FMOD_SOUND_FORMAT_PCMFLOAT;
 
-	errorCode = system->createStream((const char *) dataBuffer, mode, &info, &handle);
-	PostFMODError(errorCode);
+		errorCode = system->createStream((const char *) dataBuffer, mode, &info, &handle);
+		if (errorCode != FMOD_OK)
+		{
+			PostFMODError(errorCode);
+		}
+	}
+	else
+	{
+		errorCode = AudioSubmodule::Instance()->GetError();
+	}
 }
 
 AudioStream::~AudioStream()
@@ -109,15 +122,31 @@ void AudioStream::WriteSamples(float dt, WriteFunction function)
 void AudioStream::Start(WriteFunction function)
 {
 	writeFunction = function;
-	system->playSound(handle, nullptr, true, &instance);
-	instance->setVolume(0.701f);
-	
-	if (writeFunction)
+	if (errorCode == FMOD_OK)
 	{
-		WriteSamples(2.0f / 60.0f, writeFunction);
+		errorCode = system->playSound(handle, nullptr, true, &instance);
+		if (errorCode != FMOD_OK)
+		{
+			PostFMODError(errorCode);
+		}
+		else
+		{
+			errorCode = instance->setVolume(0.701f);
+			if (errorCode != FMOD_OK)
+			{
+				PostFMODError(errorCode);
+			}
+			else
+			{
+				if (writeFunction)
+				{
+					WriteSamples(2.0f / 60.0f, writeFunction);
+				}
+				
+				instance->setPaused(false);
+			}
+		}
 	}
-	
-	instance->setPaused(false);
 }
 
 void AudioStream::Stop()
@@ -153,18 +182,18 @@ void AudioSubmodule::DestroyAudioStreams()
 
 void AudioSubmodule::Init()
 {
-	FMOD_RESULT result;
-
-	result = FMOD::System_Create(&system);      // Create the main system object.
-	if (result != FMOD_OK)
+	errorCode = FMOD::System_Create(&system);      // Create the main system object.
+	if (errorCode != FMOD_OK)
 	{
-		PostFMODError(result);
+		PostFMODError(errorCode);
 	}
-
-	result = system->init(32, FMOD_INIT_NORMAL, 0);    // Initialize FMOD.
-	if (result != FMOD_OK)
+	else
 	{
-		PostFMODError(result);
+		errorCode = system->init(32, FMOD_INIT_NORMAL, 0);    // Initialize FMOD.
+		if (errorCode != FMOD_OK)
+		{
+			PostFMODError(errorCode);
+		}
 	}
 }
 

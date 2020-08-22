@@ -59,7 +59,7 @@ class AudioSubmodule
 {
 	FMOD::System *system = nullptr;
 	FMOD::Sound *buffer = nullptr;
-	
+	FMOD_RESULT errorCode = FMOD_OK;
 	AudioPool pool;
 	
 	static AudioSubmodule * sInstance;
@@ -81,6 +81,8 @@ public:
 	void Init();
 	void Update();
 	void Shutdown();
+	
+	FMOD_RESULT GetError() const { return errorCode; }
 };
 
 #endif /* AudioModule_h */
