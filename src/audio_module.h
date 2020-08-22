@@ -13,7 +13,22 @@
 #include <vector>
 #include "bgfx_utils.h"
 
-using WriteFunction = void (*) (float * buffer, int32_t numChannels, int32_t numFrames, int32_t hertz, float startTime);
+struct WriterBase
+{
+	float pitch = 1.0f;
+	float gain = 1.0f;
+	float phase = 0.0f;
+	float time = 0.0f;
+	float duration = 0.0f;
+	bool done = false;
+	bool inited = false;
+	
+	// does initialization, returns whether to abort
+	virtual bool Init () = 0;
+	
+	// writes to a number of frames to a buffer, returns whether to be done
+	virtual bool Write (float * buffer, int32_t numFrames) = 0;
+};
 
 struct AudioStream
 {
@@ -21,23 +36,22 @@ struct AudioStream
 	const int32_t hertz = 48 * 1000;
 	const float timeLength = 2.0f; // in seconds
 	
-	float * 	dataBuffer = nullptr;
 	FMOD::Sound * handle = nullptr;
 	FMOD::Channel * instance = nullptr;
 	FMOD::System * system = nullptr;
 	FMOD_RESULT errorCode = FMOD_OK;
 	
-	WriteFunction writeFunction = nullptr;
+	WriterBase * audioWriter = nullptr;
 	
 	int32_t NumChannels() const { return channels; }
 	int32_t NumFrames() const { return int32_t(hertz * timeLength); }
 	int32_t NumSamples() const { return channels * NumFrames(); }
 	
-	AudioStream(FMOD::System * system, WriteFunction function);
+	AudioStream(FMOD::System * system, WriterBase * audioWriter);
 	
 	~AudioStream();
 	
-	static AudioStream * Create(FMOD::System * system, WriteFunction function);
+	static AudioStream * Create(FMOD::System * system, WriterBase * audioWriter);
 	
 	static void Destroy(AudioStream *& data);
 	
@@ -58,6 +72,12 @@ class AudioSubmodule
 	static AudioSubmodule * sInstance;
 	
 public:
+	struct Context
+	{
+		int32_t hertz = 48000;
+	};
+	
+	Context context;
 	
 	AudioSubmodule()
 	{
@@ -67,13 +87,15 @@ public:
 	
 	static AudioSubmodule *Instance() { return sInstance; }
 
-	AudioStream * CreateAudioStream(WriteFunction writeFunction);
+	AudioStream * CreateAudioStream(WriterBase * audioWriter);
 	void DestroyAudioStreams();
 	void UpdateAudioStream(float dt);
 	
 	void Init();
 	void Update();
 	void Shutdown();
+	
+	const Context & GetContext() const { return context; }
 	
 	FMOD_RESULT GetError() const { return errorCode; }
 };

@@ -10,27 +10,73 @@
 
 #include <math.h>
 
-using WriteFunction = void (*) (float * buffer, int32_t numChannels, int32_t numFrames, int32_t hertz, float startTime);
+const float kTau = 6.28318530718f;
 
-void SinFunction(float * buffer, int32_t numChannels, int32_t numFrames, int32_t hertz, float startTime)
+bool SinWriter::Init()
 {
-	float pitch = 432.0f;
-	float gain = 1.0f;
-	float phase = 0.0f;
+	const auto & context = AudioSubmodule::Instance()->GetContext();
+	const float hertz = float(context.hertz);
+	time = phase * kTau / hertz;
+	inited = true;
 	
+	return false;
+}
+
+bool SinWriter::Write (float * buffer, int32_t numFrames)
+{
+	const auto & context = AudioSubmodule::Instance()->GetContext();
+	const float hertz = float(context.hertz);
 	const float timeStep = 1.0f / float(hertz);
-	float time = startTime + phase;
 	
-	for(int32_t cursor = 0; cursor < numFrames; cursor++, time += timeStep)
+	int32_t cursor = 0;
+	for( ; cursor < numFrames && time < duration; cursor++, time += timeStep)
 	{
-		float value = sinf(2.0f * 3.14159 * time * pitch);
+		float value = sinf( kTau * time * pitch);
 		value *= gain;
-		
-		switch (numChannels)
-		{
-			case 2: buffer[ cursor * numChannels + 1] = value;
-			case 1: buffer[ cursor * numChannels + 0] = value;
-			break;
-		}
+		buffer[cursor] = value;
 	}
+	
+	for( ; cursor < numFrames; cursor++, time += timeStep)
+		buffer[cursor] = 0.0f;
+	
+	return false;
+}
+
+	
+bool WriterOverride::Init()
+{
+	if (child)
+	{
+		CopyParams();
+		done = child->Init();
+		inited = true;
+	}
+	else {
+		done = true;
+	}
+	
+	return done;
+}
+
+void WriterOverride::CopyParams()
+{
+	child->gain = gain;
+	child->phase = phase;
+	child->pitch = pitch;
+	child->duration = duration;
+}
+
+bool WriterOverride::Write(float * buffer, int32_t numFrames) 
+{
+	const auto & context = AudioSubmodule::Instance()->GetContext();
+	const float hertz = float(context.hertz);
+	
+	CopyParams();
+	done = child->Write(buffer, numFrames);
+	time += numFrames / float(hertz);
+	
+	if (time > duration)
+		done = true;
+	
+	return done;
 }

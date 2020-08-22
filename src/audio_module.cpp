@@ -37,11 +37,11 @@ FMOD_RESULT PCMSetPosCallback_Null(FMOD_SOUND * soundraw, int subsound, uint32_t
 	return FMOD_OK;
 }
 
-FMOD_RESULT PCMReadCallback_WriteFn(FMOD_SOUND * soundraw,  void * data, uint32_t datalen)
+FMOD_RESULT PCMReadCallback_Writer(FMOD_SOUND * soundraw,  void * data, uint32_t datalen)
 {
 	int32_t numChannels = 1;
 	int32_t numBits = 32;
-	int32_t hertz = 48000;
+	
 	FMOD_SOUND_FORMAT format;
 	FMOD_SOUND_TYPE type;
 	FMOD_Sound_GetFormat(soundraw, &type, &format, &numChannels, &numBits);
@@ -51,26 +51,37 @@ FMOD_RESULT PCMReadCallback_WriteFn(FMOD_SOUND * soundraw,  void * data, uint32_
 	
 	float * buffer = (float *) data;
 	
-	WriteFunction writeFn;
-	FMOD_Sound_GetUserData(soundraw,  (void**) &writeFn);
-	//void (*) (float * buffer, int32_t numChannels, int32_t numFrames, int32_t hertz, float startTime);
-	if (writeFn)
-		writeFn(buffer, numChannels, numFrames, hertz, 0);
+	WriterBase * writer;
+	FMOD_Sound_GetUserData(soundraw, (void**) &writer);
+	
+	if (writer)
+		writer->Write(buffer, numFrames);
 	else
 		return FMOD_ERR_INVALID_PARAM;
 
 	return FMOD_OK;
 }
 
-AudioStream::AudioStream(FMOD::System * system, WriteFunction function) :
-	system(system), writeFunction(function)
+FMOD_RESULT PCMSetPosCallback_Initialize(FMOD_SOUND * soundraw, int subsound, uint32_t position, FMOD_TIMEUNIT postype)
+{
+	WriterBase * writer;
+	FMOD_Sound_GetUserData(soundraw, (void**) &writer);
+	if (writer && !writer->inited)
+		writer->Init();
+	else
+		return FMOD_ERR_INVALID_PARAM;
+	
+	return FMOD_OK;
+}
+
+AudioStream::AudioStream(FMOD::System * system, WriterBase * write) :
+	system(system), audioWriter(write)
 {
 	if (!system)
 		return;
 	
 	if (AudioSubmodule::Instance()->GetError() == FMOD_OK)
 	{
-		//FMOD_MODE mode = FMOD_OPENMEMORY_POINT | FMOD_CREATESTREAM | FMOD_OPENRAW | FMOD_LOOP_NORMAL;
 		FMOD_MODE mode = FMOD_OPENUSER | FMOD_CREATESTREAM | FMOD_LOOP_NORMAL;
 
 		FMOD_CREATESOUNDEXINFO info = {0};
@@ -79,9 +90,9 @@ AudioStream::AudioStream(FMOD::System * system, WriteFunction function) :
 		info.numchannels = channels;
 		info.defaultfrequency = hertz;
 		info.format = FMOD_SOUND_FORMAT_PCMFLOAT;
-		info.pcmreadcallback = PCMReadCallback_WriteFn;
-		info.pcmsetposcallback = PCMSetPosCallback_Null;
-		info.userdata = (void *) writeFunction;
+		info.pcmreadcallback = PCMReadCallback_Writer;
+		info.pcmsetposcallback = PCMSetPosCallback_Initialize;
+		info.userdata = (void *) audioWriter;
 
 		errorCode = system->createStream("", mode, &info, &handle);
 		if (errorCode != FMOD_OK)
@@ -101,12 +112,11 @@ AudioStream::AudioStream(FMOD::System * system, WriteFunction function) :
 AudioStream::~AudioStream()
 {
 	handle->release();
-	free(dataBuffer);
 }
 
-AudioStream * AudioStream::Create(FMOD::System * system, WriteFunction function)
+AudioStream * AudioStream::Create(FMOD::System * system, WriterBase * audioWriter)
 {
-	AudioStream * ret = new AudioStream(system, function);
+	AudioStream * ret = new AudioStream(system, audioWriter);
 	return ret;
 }
 
@@ -153,12 +163,13 @@ void AudioStream::Stop()
 
 void AudioStream::Update(float dt)
 {
-
+	if (audioWriter && audioWriter->done)
+		Stop();
 }
 
-AudioStream * AudioSubmodule::CreateAudioStream(WriteFunction writeFunction)
+AudioStream * AudioSubmodule::CreateAudioStream(WriterBase * audioWriter)
 {
-	AudioStream * ret = AudioStream::Create(system, writeFunction);
+	AudioStream * ret = AudioStream::Create(system, audioWriter);
 	pool.push_back(ret);
 	return ret;
 }

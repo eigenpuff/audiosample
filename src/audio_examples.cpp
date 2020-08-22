@@ -9,18 +9,26 @@
 #include "entry_point.h"
 #include "audio_writers.h"
 
-static AudioStream * sinf = nullptr;
+static AudioStream * memStream = nullptr;
 
 void AppWrapper::StartLogic()
 {
-	sinf = m_audio.CreateAudioStream(SinFunction);
-	sinf->Start();
+	SinWriter * sin = new SinWriter();
+	
+	WriterOverride * root = new WriterOverride();
+	root->child = sin;
+	root->gain = 1.0f;
+	root->pitch = 440.0f;
+	root->duration = 10.0f;
+	
+	memStream = m_audio.CreateAudioStream(root);
+	memStream->Start();
 }
 
 
 void AppWrapper::UpdateLogic(float dt)
 {
-	sinf->Update(dt);
+	memStream->Update(dt);
 	m_audio.UpdateAudioStream(dt);
 }
 
