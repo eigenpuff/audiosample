@@ -9,6 +9,7 @@
 
 //#include <fmod/fmod.hpp>
 #include <fmod/fmod_errors.h>
+#include <fmod/fmod.h>
 #include <stdio.h>
 #include <stdlib.h>
 #include "presentation_modules.h"
@@ -21,28 +22,68 @@ inline void PostFMODError(FMOD_RESULT result)
 {
 	DebugSubmodule::Instance()->SetDebugString(FMOD_ErrorString(result));
 }
+
+FMOD_RESULT PCMReadCallback_Zero(FMOD_SOUND * soundraw, void * data, uint32_t datalen)
+{
+	uint8_t * buffer = (uint8_t *) data;
+	for (int c = 0; c < datalen; c++)
+		buffer[c] = 0;
 	
-AudioStream::AudioStream(FMOD::System * system) :
-	system(system)
+	return FMOD_OK;
+}
+
+FMOD_RESULT PCMSetPosCallback_Null(FMOD_SOUND * soundraw, int subsound, uint32_t position, FMOD_TIMEUNIT postype)
+{
+	return FMOD_OK;
+}
+
+FMOD_RESULT PCMReadCallback_WriteFn(FMOD_SOUND * soundraw,  void * data, uint32_t datalen)
+{
+	int32_t numChannels = 1;
+	int32_t numBits = 32;
+	int32_t hertz = 48000;
+	FMOD_SOUND_FORMAT format;
+	FMOD_SOUND_TYPE type;
+	FMOD_Sound_GetFormat(soundraw, &type, &format, &numChannels, &numBits);
+	
+	const int32_t bufferLen = datalen / sizeof(float);
+	const int32_t numFrames = bufferLen / numChannels;
+	
+	float * buffer = (float *) data;
+	
+	WriteFunction writeFn;
+	FMOD_Sound_GetUserData(soundraw,  (void**) &writeFn);
+	//void (*) (float * buffer, int32_t numChannels, int32_t numFrames, int32_t hertz, float startTime);
+	if (writeFn)
+		writeFn(buffer, numChannels, numFrames, hertz, 0);
+	else
+		return FMOD_ERR_INVALID_PARAM;
+
+	return FMOD_OK;
+}
+
+AudioStream::AudioStream(FMOD::System * system, WriteFunction function) :
+	system(system), writeFunction(function)
 {
 	if (!system)
 		return;
 	
 	if (AudioSubmodule::Instance()->GetError() == FMOD_OK)
 	{
-		FMOD_MODE mode = FMOD_OPENMEMORY_POINT | FMOD_CREATESTREAM | FMOD_OPENRAW | FMOD_LOOP_NORMAL;
-
-		dataBuffer = (float *) calloc(NumSamples(), sizeof(float));
-		dataLength = size_t( NumSamples() * sizeof(float) );
+		//FMOD_MODE mode = FMOD_OPENMEMORY_POINT | FMOD_CREATESTREAM | FMOD_OPENRAW | FMOD_LOOP_NORMAL;
+		FMOD_MODE mode = FMOD_OPENUSER | FMOD_CREATESTREAM | FMOD_LOOP_NORMAL;
 
 		FMOD_CREATESOUNDEXINFO info = {0};
 		info.cbsize = sizeof(FMOD_CREATESOUNDEXINFO);
-		info.length = timeLength;
+		info.length = uint32_t(timeLength * hertz);
 		info.numchannels = channels;
 		info.defaultfrequency = hertz;
 		info.format = FMOD_SOUND_FORMAT_PCMFLOAT;
+		info.pcmreadcallback = PCMReadCallback_WriteFn;
+		info.pcmsetposcallback = PCMSetPosCallback_Null;
+		info.userdata = (void *) writeFunction;
 
-		errorCode = system->createStream((const char *) dataBuffer, mode, &info, &handle);
+		errorCode = system->createStream("", mode, &info, &handle);
 		if (errorCode != FMOD_OK)
 		{
 			PostFMODError(errorCode);
@@ -50,6 +91,9 @@ AudioStream::AudioStream(FMOD::System * system) :
 	}
 	else
 	{
+		//if the audio system as a whole has an error, copy it to our error to
+		// poison our playback so that this sound doesn't assume everything is
+		// all hunky-dory
 		errorCode = AudioSubmodule::Instance()->GetError();
 	}
 }
@@ -60,9 +104,9 @@ AudioStream::~AudioStream()
 	free(dataBuffer);
 }
 
-AudioStream * AudioStream::Create(FMOD::System * system)
+AudioStream * AudioStream::Create(FMOD::System * system, WriteFunction function)
 {
-	AudioStream * ret = new AudioStream(system);
+	AudioStream * ret = new AudioStream(system, function);
 	return ret;
 }
 
@@ -72,58 +116,11 @@ void AudioStream::Destroy(AudioStream *& data)
 	data = nullptr;
 }
 
-inline void WriteFrame(float * dstBuffer, float * srcBuffer, int32_t channels, int32_t dstIndex, int32_t srcIndx)
+void AudioStream::Start()
 {
-	switch(channels)
-	{
-		case 2: dstBuffer[dstIndex * channels + 1] = srcBuffer[srcIndx * channels + 1];
-		case 1: dstBuffer[dstIndex * channels + 0] = srcBuffer[srcIndx * channels + 0];
-		break;
-	}
-}
-
-void AudioStream::WriteSamples(float dt, WriteFunction function)
-{
-	const int32_t framesToWrite = dt * hertz;
-	const size_t allocSize = framesToWrite * channels * sizeof(float);
-	const int32_t numFrames = NumFrames();
-	
-	float * tempBuffer = (float*) StackAlloc( allocSize );
-	function(tempBuffer, channels, framesToWrite, hertz, writeTime);
-	
-	if (writeCursor + framesToWrite > NumFrames())
-	{
-		int32_t numStartFrames = (writeCursor + framesToWrite) - numFrames;
-		int32_t numEndFrames = framesToWrite - numStartFrames;
-		
-		for (int32_t dst = writeCursor, src = 0; dst < numFrames; dst++, src++)
-		{
-			WriteFrame(dataBuffer, tempBuffer, channels, dst, src);
-		}
-		
-		for (int32_t dst = 0, src = numEndFrames; dst < numStartFrames; dst++, src++)
-		{
-			WriteFrame(dataBuffer, tempBuffer, channels, dst, src);
-		}
-		
-		writeCursor = numStartFrames;
-	}
-	else
-	{
-		for (int32_t dst = writeCursor, src = 0; dst < framesToWrite; dst++, src++)
-		{
-			WriteFrame(dataBuffer, tempBuffer, channels, dst, src);
-		}
-		
-		writeCursor += framesToWrite;
-	}
-}
-
-void AudioStream::Start(WriteFunction function)
-{
-	writeFunction = function;
 	if (errorCode == FMOD_OK)
 	{
+		//result = system->playSound(sound, null, false, out channel);
 		errorCode = system->playSound(handle, nullptr, true, &instance);
 		if (errorCode != FMOD_OK)
 		{
@@ -138,12 +135,11 @@ void AudioStream::Start(WriteFunction function)
 			}
 			else
 			{
-				if (writeFunction)
+				errorCode = instance->setPaused(false);
+				if (errorCode != FMOD_OK)
 				{
-					WriteSamples(2.0f / 60.0f, writeFunction);
+					PostFMODError(errorCode);
 				}
-				
-				instance->setPaused(false);
 			}
 		}
 	}
@@ -151,17 +147,18 @@ void AudioStream::Start(WriteFunction function)
 
 void AudioStream::Stop()
 {
-	instance->stop();
+	if (errorCode == FMOD_OK)
+		instance->stop();
 }
 
 void AudioStream::Update(float dt)
 {
-	WriteSamples(dt, writeFunction);
+
 }
 
-AudioStream * AudioSubmodule::CreateAudioStream()
+AudioStream * AudioSubmodule::CreateAudioStream(WriteFunction writeFunction)
 {
-	AudioStream * ret = AudioStream::Create(system);
+	AudioStream * ret = AudioStream::Create(system, writeFunction);
 	pool.push_back(ret);
 	return ret;
 }

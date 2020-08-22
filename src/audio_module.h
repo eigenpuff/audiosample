@@ -25,12 +25,7 @@ struct AudioStream
 	FMOD::Sound * handle = nullptr;
 	FMOD::Channel * instance = nullptr;
 	FMOD::System * system = nullptr;
-	
-	size_t dataLength = 0;
-	FMOD_RESULT errorCode;
-	
-	int32_t writeCursor = 0;
-	float writeTime = 0.0f;
+	FMOD_RESULT errorCode = FMOD_OK;
 	
 	WriteFunction writeFunction = nullptr;
 	
@@ -38,17 +33,15 @@ struct AudioStream
 	int32_t NumFrames() const { return int32_t(hertz * timeLength); }
 	int32_t NumSamples() const { return channels * NumFrames(); }
 	
-	AudioStream(FMOD::System * system);
+	AudioStream(FMOD::System * system, WriteFunction function);
 	
 	~AudioStream();
 	
-	static AudioStream * Create(FMOD::System * system);
+	static AudioStream * Create(FMOD::System * system, WriteFunction function);
 	
 	static void Destroy(AudioStream *& data);
 	
-	void WriteSamples(float dt, WriteFunction function);
-	
-	void Start(WriteFunction function);
+	void Start();
 	void Stop();
 	void Update(float dt);
 };
@@ -74,7 +67,7 @@ public:
 	
 	static AudioSubmodule *Instance() { return sInstance; }
 
-	AudioStream * CreateAudioStream();
+	AudioStream * CreateAudioStream(WriteFunction writeFunction);
 	void DestroyAudioStreams();
 	void UpdateAudioStream(float dt);
 	

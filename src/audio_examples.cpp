@@ -13,8 +13,8 @@ static AudioStream * sinf = nullptr;
 
 void AppWrapper::StartLogic()
 {
-	sinf = m_audio.CreateAudioStream();
-	sinf->Start(SinFunction);
+	sinf = m_audio.CreateAudioStream(SinFunction);
+	sinf->Start();
 }
 
 
