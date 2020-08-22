@@ -6,9 +6,7 @@
 //
 
 #include "presentation_modules.h"
-
 #include "imgui/imgui.h"
-
 
 void DebugSubmodule::Init(uint32_t debug)
 {

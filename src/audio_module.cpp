@@ -15,133 +15,121 @@
 #define StackAlloc alloca
 
 
-struct AudioStream
+	
+AudioStream::AudioStream(FMOD::System * system) :
+	system(system)
 {
-	const int32_t channels = 1;
-	const int32_t hertz = 48 * 1000;
-	const float timeLength = 2.0f; // in seconds
-	
-	float * 	dataBuffer = nullptr;
-	FMOD::Sound * handle = nullptr;
-	FMOD::Channel * instance = nullptr;
-	FMOD::System * system = nullptr;
-	
-	size_t dataLength = 0;
-	FMOD_RESULT errorCode;
-	
-	int32_t writeFrame = 0;
-	float writeTime = 0.0f;
-	
-	using WriteFunction = void (*) (float * buffer, int32_t numChannels, int32_t numSamples, int32_t hertz, float startTime);
-	WriteFunction writeFunction = nullptr;
-	
-	int32_t NumChannels() const { return channels; }
-	int32_t NumFrames() const { return int32_t(hertz * timeLength); }
-	int32_t NumSamples() const { return channels * NumFrames(); }
-	
-	AudioStream(FMOD::System * system) :
-		system(system)
-	{
-		FMOD_MODE mode = FMOD_OPENMEMORY_POINT | FMOD_CREATESTREAM | FMOD_OPENRAW | FMOD_LOOP_NORMAL;
+	FMOD_MODE mode = FMOD_OPENMEMORY_POINT | FMOD_CREATESTREAM | FMOD_OPENRAW | FMOD_LOOP_NORMAL;
 
-		dataBuffer = (float *) calloc(NumSamples(), sizeof(float));
-		dataLength = size_t( NumSamples() * sizeof(float) );
+	dataBuffer = (float *) calloc(NumSamples(), sizeof(float));
+	dataLength = size_t( NumSamples() * sizeof(float) );
 
-		FMOD_CREATESOUNDEXINFO info = {0};
-		info.cbsize = sizeof(FMOD_CREATESOUNDEXINFO);
-		info.length = timeLength;
-		info.numchannels = channels;
-		info.defaultfrequency = hertz;
-		info.format = FMOD_SOUND_FORMAT_PCMFLOAT;
+	FMOD_CREATESOUNDEXINFO info = {0};
+	info.cbsize = sizeof(FMOD_CREATESOUNDEXINFO);
+	info.length = timeLength;
+	info.numchannels = channels;
+	info.defaultfrequency = hertz;
+	info.format = FMOD_SOUND_FORMAT_PCMFLOAT;
 
-		errorCode = system->createStream((const char *) dataBuffer, mode, &info, &handle);
-	}
-	
-	~AudioStream()
-	{
-		handle->release();
-		free(dataBuffer);
-	}
-	
-	static AudioStream * Create(FMOD::System * system)
-	{
-		AudioStream * ret = new AudioStream(system);
-		return ret;
-	}
-	
-	static void Destroy(AudioStream *& data)
-	{
-		delete data;
-		data = nullptr;
-	}
-	
-	inline void WriteFrame(float * dstBuffer, float * srcBuffer, int32_t dstIndex, int32_t srcIndx)
-	{
-		switch(channels)
-		{
-			case 2: dstBuffer[dstIndex * channels + 1] = srcBuffer[srcIndx * channels + 1];
-			case 1: dstBuffer[dstIndex * channels + 0] = srcBuffer[srcIndx * channels + 0];
-			break;
-		}
-	}
-	
-	void WriteSamples(float dt, WriteFunction function)
-	{
-		int32_t numFrames = dt * hertz;
-		float * tempBuffer = (float*) StackAlloc( numFrames * channels * sizeof(float) );
-		function(tempBuffer, channels, numFrames, hertz, writeTime);
-		
-		if (writeFrame + numFrames > NumFrames())
-		{
-			int32_t numStartFrames = (writeFrame + numFrames) - NumFrames();
-			int32_t numEndFrames = numFrames - numStartFrames;
-			
-			for (int32_t dst = writeFrame, src = 0; dst < NumFrames(); dst++, src++)
-			{
-				WriteFrame(dataBuffer, tempBuffer, dst, src);
-			}
-			
-			for (int32_t dst = 0, src = numEndFrames; dst < numStartFrames; dst++, src++)
-			{
-				WriteFrame(dataBuffer, tempBuffer, dst, src);
-			}
-		}
-		else
-		{
-			for (int32_t dst = writeFrame, src = 0; dst < NumFrames(); dst++, src++)
-			{
-				WriteFrame(dataBuffer, tempBuffer, dst, src);
-			}
-		}
-	}
-	
-	void Start(WriteFunction function)
-	{
-		system->playSound(handle, nullptr, true, &instance);
-		instance->setVolume(0.701f);
-		
-		if (writeFunction)
-		{
-			WriteSamples(2.0f / 60.0f, writeFunction);
-		}
-		
-		instance->setPaused(false);
-	}
-	
-	void Stop()
-	{
-		instance->stop();
-	}
-	
-	void Update(float dt)
-	{
-		WriteSamples(dt, writeFunction);
-	}
-};
+	errorCode = system->createStream((const char *) dataBuffer, mode, &info, &handle);
+}
 
-void AudioSubmodule::CreateAudioStream()
+AudioStream::~AudioStream()
 {
-	pool.push_back(AudioStream::Create(system));
+	handle->release();
+	free(dataBuffer);
+}
+
+AudioStream * AudioStream::Create(FMOD::System * system)
+{
+	AudioStream * ret = new AudioStream(system);
+	return ret;
+}
+
+void AudioStream::Destroy(AudioStream *& data)
+{
+	delete data;
+	data = nullptr;
+}
+
+inline void WriteFrame(float * dstBuffer, float * srcBuffer, int32_t channels, int32_t dstIndex, int32_t srcIndx)
+{
+	switch(channels)
+	{
+		case 2: dstBuffer[dstIndex * channels + 1] = srcBuffer[srcIndx * channels + 1];
+		case 1: dstBuffer[dstIndex * channels + 0] = srcBuffer[srcIndx * channels + 0];
+		break;
+	}
+}
+
+void AudioStream::WriteSamples(float dt, WriteFunction function)
+{
+	const int32_t framesToWrite = dt * hertz;
+	const size_t allocSize = framesToWrite * channels * sizeof(float);
+	const int32_t numFrames = NumFrames();
+	
+	
+	float * tempBuffer = (float*) alloca ( allocSize );
+	//float * tempBuffer = (float*) StackAlloc( allocSize );
+	function(tempBuffer, channels, framesToWrite, hertz, writeTime);
+	
+	if (writeCursor + framesToWrite > NumFrames())
+	{
+		int32_t numStartFrames = (writeCursor + framesToWrite) - numFrames;
+		int32_t numEndFrames = framesToWrite - numStartFrames;
+		
+		for (int32_t dst = writeCursor, src = 0; dst < numFrames; dst++, src++)
+		{
+			WriteFrame(dataBuffer, tempBuffer, channels, dst, src);
+		}
+		
+		for (int32_t dst = 0, src = numEndFrames; dst < numStartFrames; dst++, src++)
+		{
+			WriteFrame(dataBuffer, tempBuffer, channels, dst, src);
+		}
+		
+		writeCursor = numStartFrames;
+	}
+	else
+	{
+		for (int32_t dst = writeCursor, src = 0; dst < framesToWrite; dst++, src++)
+		{
+			WriteFrame(dataBuffer, tempBuffer, channels, dst, src);
+		}
+		
+		writeCursor += framesToWrite;
+	}
+}
+
+void AudioStream::Start(WriteFunction function)
+{
+	writeFunction = function;
+	system->playSound(handle, nullptr, true, &instance);
+	instance->setVolume(0.701f);
+	
+	if (writeFunction)
+	{
+		WriteSamples(2.0f / 60.0f, writeFunction);
+	}
+	
+	instance->setPaused(false);
+}
+
+void AudioStream::Stop()
+{
+	instance->stop();
+}
+
+void AudioStream::Update(float dt)
+{
+	WriteSamples(dt, writeFunction);
+}
+
+AudioStream * AudioSubmodule::CreateAudioStream()
+{
+	AudioStream * ret = AudioStream::Create(system);
+	pool.push_back(ret);
+	return ret;
 }
 
 void AudioSubmodule::UpdateAudioStream(float dt)
@@ -173,8 +161,6 @@ void AudioSubmodule::Init()
 	{
 		printf("FMOD error! (%d) %s\n", result, FMOD_ErrorString(result));
 	}
-	
-	CreateAudioStream();
 }
 
 void AudioSubmodule::Update()
