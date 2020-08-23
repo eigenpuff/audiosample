@@ -112,7 +112,7 @@ AudioWriter::Base * GenerateNoteWriter(NoteValue note, bool downBeat)
 	if (note.note == kRest)
 		return nullptr;
 	
-	AudioWriter::Base * tone = new AudioWriter::SineTone();
+	AudioWriter::Base * tone = new AudioWriter::Tone(AudioWriter::SineWave);
 	auto * param = new AudioWriter::ParamOverride();
 	
 	param->gain = downBeat ? 1.0f : 0.70f;
@@ -123,16 +123,16 @@ AudioWriter::Base * GenerateNoteWriter(NoteValue note, bool downBeat)
 	return param;
 }
 
-
 void AppWrapper::StartLogic()
 {
 	auto note = GenerateNoteWriter({kNoteA, 2.0f}, false);
 	auto treeNote = AudioWriter::Tree(note);
 	
-	auto * sin = new AudioWriter::SineTone();
+	auto * sin = new AudioWriter::Tone(AudioWriter::SquareWave);
 	auto * root = new AudioWriter::ParamOverride();
+	
 	root->child = sin;
-	root->gain = 1.0f;
+	root->gain = 0.050f;
 	root->pitch = 440.0f;
 	root->delay = 0.75f;
 	root->duration = 3.0f;

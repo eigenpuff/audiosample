@@ -13,13 +13,37 @@
 namespace AudioWriter
 {
 
-bool SineTone::Init()
+float SineWave(float time, float pitch, float phase)
 {
-	inited = true;	
+	return sinf( kTau * (time * pitch + phase) );
+}
+
+float SawWave(float time, float pitch, float phase)
+{
+	return fmod(time+phase, 1.0f/pitch) * pitch;
+}
+
+float SquareWave(float time, float pitch, float phase)
+{
+	//hacky but works for testing purposes
+	const float mod = 1.0f / pitch;
+	const float value = fmod(time + phase, 2.0f * mod);
+	return value < mod ? 1.0f : -1.0f;
+}
+
+float TriangleWave(float time, float pitch, float phase)
+{
+	return 0;
+}
+
+bool Tone::Init()
+{
+	inited = true;
+	done = wave == nullptr;
 	return done;
 }
 
-bool SineTone::Write (float * buffer, int32_t numFrames)
+bool Tone::Write (float * buffer, int32_t numFrames)
 {
 	const auto & context = AudioSubmodule::Instance()->GetContext();
 	const float hertz = float(context.hertz);
@@ -37,7 +61,7 @@ bool SineTone::Write (float * buffer, int32_t numFrames)
 		
 		for( int32_t writeCursor = 0; writeCursor < writeFrames && cursor < numFrames; writeCursor++, time += timeStep )
 		{
-			float value = sinf( kTau * (time * pitch + phase/hertz) );
+			float value = wave(time, pitch, phase/hertz);
 			value *= gain;
 			buffer[cursor++] = value;
 		}
@@ -52,5 +76,6 @@ bool SineTone::Write (float * buffer, int32_t numFrames)
 	done = time >= duration;
 	return done;
 }
+
 
 }

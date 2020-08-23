@@ -64,12 +64,6 @@ struct Tree
 	}
 };
 
-struct SineTone : Base
-{
-	bool Init() override;
-	bool Write (float * buffer, int32_t numFrames) override;
-};
-
 struct ParamOverride : Base
 {
 	Base * child = nullptr;
@@ -82,6 +76,23 @@ struct ParamOverride : Base
 	
 	~ParamOverride() { delete child; }
 };
+
+
+using WaveFn = float (*) (float time, float pitch, float phase);
+	
+struct Tone: Base
+{
+	Tone(WaveFn wv) : wave(wv) {}
+	bool Init() override;
+	bool Write (float * buffer, int32_t numFrames) override;
+	
+	WaveFn wave = nullptr;
+};
+
+float SineWave(float time, float pitch, float phase);
+float SawWave(float time, float pitch, float phase);
+float SquareWave(float time, float pitch, float phase);
+float TriangleWave(float time, float pitch, float phase);
 
 }
 
