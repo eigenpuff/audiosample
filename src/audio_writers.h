@@ -9,6 +9,7 @@
 #define audio_writers_h
 
 #include <stdint.h>
+#include <vector>
 
 const float kTau = 6.28318530718f;
 
@@ -78,6 +79,42 @@ struct ParamOverride : Base
 };
 
 
+struct Sequencer : Base
+{
+	std::vector<Base*> children;
+	std::vector<float> delays;
+	std::vector<bool>  simulWithPrevious;
+
+	bool Init() override;
+	bool Write(float *buffer, int32_t numFrames) override;
+	
+	~Sequencer() override;
+};
+
+struct Composite : Base
+{
+	std::vector<Base*> children;
+	
+	bool Init() override;
+	bool Write(float *buffer, int32_t numFrames) override;
+	
+	~Composite() override;
+};
+
+using EnvelopeFn = float(*) (float time, void *userData);
+
+struct Envelope : Base
+{
+	Base * child;
+	Envelope(EnvelopeFn envFn) : envelope(envFn) {}
+
+	bool Init() override;
+	bool Write(float *buffer, int32_t numFrames) override;
+	
+	~Envelope() override;
+	EnvelopeFn envelope;
+};
+
 using WaveFn = float (*) (float time, float pitch, float phase);
 	
 struct Tone: Base
@@ -93,6 +130,12 @@ float SineWave(float time, float pitch, float phase);
 float SawWave(float time, float pitch, float phase);
 float SquareWave(float time, float pitch, float phase);
 float TriangleWave(float time, float pitch, float phase);
+
+using EnvelopeFn = float(*) (float time, void *userData);
+
+float SineEnvelope(float time, void * userData);
+float SplineEnvelop(float time, void * userData);
+float AttackDecayEnvelope(float time, void * userData);
 
 }
 
