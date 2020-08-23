@@ -15,12 +15,8 @@ namespace AudioWriter
 
 bool SineTone::Init()
 {
-	const auto & context = AudioSubmodule::Instance()->GetContext();
-	const float hertz = float(context.hertz);
-	time = phase * kTau / hertz;
-	inited = true;
-	
-	return false;
+	inited = true;	
+	return done;
 }
 
 bool SineTone::Write (float * buffer, int32_t numFrames)
@@ -30,17 +26,31 @@ bool SineTone::Write (float * buffer, int32_t numFrames)
 	const float timeStep = 1.0f / float(hertz);
 	
 	int32_t cursor = 0;
-	for( ; cursor < numFrames && time < duration; cursor++, time += timeStep)
+	
+	if (time < duration)
 	{
-		float value = sinf( kTau * time * pitch);
-		value *= gain;
-		buffer[cursor] = value;
+		float writeTime = duration - time;
+		int32_t writeFrames = int32_t(writeTime * hertz);
+		
+		if (writeFrames > numFrames)
+			writeFrames = numFrames;
+		
+		for( int32_t writeCursor = 0; writeCursor < writeFrames && cursor < numFrames; writeCursor++, time += timeStep )
+		{
+			float value = sinf( kTau * (time * pitch + phase/hertz) );
+			value *= gain;
+			buffer[cursor++] = value;
+		}
 	}
 	
-	for( ; cursor < numFrames; cursor++, time += timeStep)
-		buffer[cursor] = 0.0f;
+	if (cursor < numFrames)
+	{
+		for( ; cursor < numFrames; cursor++, time += timeStep )
+			buffer[cursor++] = 0.0f;
+	}
 	
-	return false;
+	done = time >= duration;
+	return done;
 }
 
 }

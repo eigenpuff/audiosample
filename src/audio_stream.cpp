@@ -63,7 +63,7 @@ FMOD_RESULT PCMSetPosCallback_Initialize(FMOD_SOUND * soundraw, int subsound, ui
 }
 
 AudioStream::AudioStream(FMOD::System * system, AudioWriter::Base * write) :
-	system(system), audioWriter(write)
+	system(system), audioTree(write)
 {
 	if (!system)
 		return;
@@ -80,7 +80,7 @@ AudioStream::AudioStream(FMOD::System * system, AudioWriter::Base * write) :
 		info.format = FMOD_SOUND_FORMAT_PCMFLOAT;
 		info.pcmreadcallback = PCMReadCallback_Writer;
 		info.pcmsetposcallback = PCMSetPosCallback_Initialize;
-		info.userdata = (void *) audioWriter;
+		info.userdata = (void *) audioTree.root;
 
 		errorCode = system->createStream("", mode, &info, &handle);
 		if (errorCode != FMOD_OK)
@@ -151,7 +151,7 @@ void AudioStream::Stop()
 
 void AudioStream::Update(float dt)
 {
-	if (audioWriter && audioWriter->done)
+	if (audioTree.root && audioTree.root->done)
 		Stop();
 }
 

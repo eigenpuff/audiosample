@@ -22,6 +22,7 @@ struct Base
 	float phase = 0.0f;
 	float time = 0.0f;
 	float duration = 0.0f;
+	
 	bool  done = false;
 	bool  inited = false;
 	
@@ -30,6 +31,37 @@ struct Base
 	
 	// writes to a number of frames to a buffer, returns whether to be done
 	virtual bool Write (float * buffer, int32_t numFrames) = 0;
+	virtual ~Base() {}
+};
+
+//Tree is meant to be used by value to hold on to a dynamically
+// allocated root pointer.
+struct Tree
+{
+	Base * root;
+	
+	Tree(Base * base) :
+		root(base)
+	{}
+	
+	bool Init()
+	{
+		if (root)
+			return root->Init();
+		return true;
+	}
+	
+	bool Write(float * buffer, int32_t numFrames)
+	{
+		if (root)
+			return root->Write(buffer, numFrames);
+		return true;
+	}
+	
+	~Tree()
+	{
+		delete root;
+	}
 };
 
 struct SineTone : Base
@@ -41,12 +73,14 @@ struct SineTone : Base
 struct ParamOverride : Base
 {
 	Base * child = nullptr;
-	float duration = 0.0f;
+	float delay = 0.0f;
 	
 	void CopyParams();
 	
 	bool Init() override;
 	bool Write(float * buffer, int32_t numFrames) override;
+	
+	~ParamOverride() { delete child; }
 };
 
 }

@@ -10,6 +10,7 @@
 
 #include <fmod/fmod_errors.h>
 #include <stdint.h>
+#include "audio_writers.h"
 
 namespace FMOD
 {
@@ -34,7 +35,7 @@ struct AudioStream
 	FMOD::System * system = nullptr;
 	FMOD_RESULT errorCode = FMOD_OK;
 	
-	AudioWriter::Base * audioWriter = nullptr;
+	AudioWriter::Tree audioTree = nullptr;
 	
 	int32_t NumChannels() const { return channels; }
 	int32_t NumFrames() const { return int32_t(hertz * timeLength); }

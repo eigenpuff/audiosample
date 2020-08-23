@@ -31,21 +31,38 @@ void ParamOverride::CopyParams()
 	child->gain = gain;
 	child->phase = phase;
 	child->pitch = pitch;
+	
 	child->duration = duration;
 }
 
 bool ParamOverride::Write(float * buffer, int32_t numFrames)
 {
+	CopyParams();
+	
 	const auto & context = AudioSubmodule::Instance()->GetContext();
 	const float hertz = float(context.hertz);
 	
-	CopyParams();
-	done = child->Write(buffer, numFrames);
-	time += numFrames / float(hertz);
+	const float timeStep = float (numFrames) / hertz;
 	
-	if (time > duration)
-		done = true;
+	if (time < delay)
+	{
+		if (time + timeStep > delay)
+		{
+			float delayStep = delay - time;
+			float writeStep = timeStep - delayStep;
+			int32_t writeFrames = int32_t(writeStep * hertz);
+			int32_t writeStart = numFrames - writeFrames;
+			
+			int32_t channels = 1;
+			child->Write(buffer + (writeStart * channels), writeFrames);
+		}
+	}
+	else
+	{
+		done = child->Write(buffer, numFrames);
+	}
 	
+	time += timeStep;
 	return done;
 }
 
