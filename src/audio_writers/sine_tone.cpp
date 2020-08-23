@@ -1,16 +1,14 @@
 //
-//  audio_writers.cpp
+//  sine_tone.cpp
 //  audiosample
 //
-//  Created by Mike Gonzales on 8/21/20.
+//  Created by Mike Gonzales on 8/22/20.
 //
 
 #include "audio_writers.h"
+
 #include "audio_module.h"
-
 #include <math.h>
-
-const float kTau = 6.28318530718f;
 
 bool SinWriter::Init()
 {
@@ -40,43 +38,4 @@ bool SinWriter::Write (float * buffer, int32_t numFrames)
 		buffer[cursor] = 0.0f;
 	
 	return false;
-}
-
-	
-bool WriterOverride::Init()
-{
-	if (child)
-	{
-		CopyParams();
-		done = child->Init();
-		inited = true;
-	}
-	else {
-		done = true;
-	}
-	
-	return done;
-}
-
-void WriterOverride::CopyParams()
-{
-	child->gain = gain;
-	child->phase = phase;
-	child->pitch = pitch;
-	child->duration = duration;
-}
-
-bool WriterOverride::Write(float * buffer, int32_t numFrames) 
-{
-	const auto & context = AudioSubmodule::Instance()->GetContext();
-	const float hertz = float(context.hertz);
-	
-	CopyParams();
-	done = child->Write(buffer, numFrames);
-	time += numFrames / float(hertz);
-	
-	if (time > duration)
-		done = true;
-	
-	return done;
 }
