@@ -12,7 +12,10 @@
 
 const float kTau = 6.28318530718f;
 
-struct WriterBase
+namespace AudioWriter
+{
+
+struct Base
 {
 	float pitch = 1.0f;
 	float gain = 1.0f;
@@ -29,15 +32,15 @@ struct WriterBase
 	virtual bool Write (float * buffer, int32_t numFrames) = 0;
 };
 
-struct SinWriter : WriterBase
+struct SineTone : Base
 {
 	bool Init() override;
 	bool Write (float * buffer, int32_t numFrames) override;
 };
 
-struct WriterOverride : WriterBase
+struct ParamOverride : Base
 {
-	WriterBase * child = nullptr;
+	Base * child = nullptr;
 	float duration = 0.0f;
 	
 	void CopyParams();
@@ -45,5 +48,7 @@ struct WriterOverride : WriterBase
 	bool Init() override;
 	bool Write(float * buffer, int32_t numFrames) override;
 };
+
+}
 
 #endif /* audio_writers_h */

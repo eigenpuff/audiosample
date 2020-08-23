@@ -29,6 +29,13 @@ AudioSubmodule::AudioSubmodule()
 	sInstance = this;
 }
 
+AudioStream * AudioSubmodule::CreateAudioStream(AudioWriter::Base * audioWriter)
+{
+	AudioStream * ret = AudioStream::Create(system, audioWriter);
+	pool.push_back(ret);
+	return ret;
+}
+
 void AudioSubmodule::UpdateAudioStream(float dt)
 {
 	for(auto audio : pool)

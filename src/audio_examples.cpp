@@ -13,9 +13,9 @@ static AudioStream * memStream = nullptr;
 
 void AppWrapper::StartLogic()
 {
-	SinWriter * sin = new SinWriter();
+	auto * sin = new AudioWriter::SineTone();
 	
-	WriterOverride * root = new WriterOverride();
+	auto * root = new AudioWriter::ParamOverride();
 	root->child = sin;
 	root->gain = 1.0f;
 	root->pitch = 440.0f;

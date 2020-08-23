@@ -11,13 +11,17 @@
 #include <fmod/fmod_errors.h>
 #include <stdint.h>
 
-namespace FMOD {
-  class System;
-  class Sound;
-  class Channel;
+namespace FMOD
+{
+	class System;
+	class Sound;
+	class Channel;
 }
 
-struct WriterBase;
+namespace AudioWriter
+{
+	struct Base;
+}
 
 struct AudioStream
 {
@@ -30,17 +34,17 @@ struct AudioStream
 	FMOD::System * system = nullptr;
 	FMOD_RESULT errorCode = FMOD_OK;
 	
-	WriterBase * audioWriter = nullptr;
+	AudioWriter::Base * audioWriter = nullptr;
 	
 	int32_t NumChannels() const { return channels; }
 	int32_t NumFrames() const { return int32_t(hertz * timeLength); }
 	int32_t NumSamples() const { return channels * NumFrames(); }
 	
-	AudioStream(FMOD::System * system, WriterBase * audioWriter);
+	AudioStream(FMOD::System * system, AudioWriter::Base * audioWriter);
 	
 	~AudioStream();
 	
-	static AudioStream * Create(FMOD::System * system, WriterBase * audioWriter);
+	static AudioStream * Create(FMOD::System * system, AudioWriter::Base * audioWriter);
 	
 	static void Destroy(AudioStream *& data);
 	

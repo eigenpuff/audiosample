@@ -47,7 +47,7 @@ public:
 	
 	static AudioSubmodule *Instance() { return sInstance; }
 
-	AudioStream * CreateAudioStream(WriterBase * audioWriter);
+	AudioStream * CreateAudioStream(AudioWriter::Base * audioWriter);
 	void DestroyAudioStreams();
 	void UpdateAudioStream(float dt);
 	

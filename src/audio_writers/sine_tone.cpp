@@ -10,7 +10,10 @@
 #include "audio_module.h"
 #include <math.h>
 
-bool SinWriter::Init()
+namespace AudioWriter
+{
+
+bool SineTone::Init()
 {
 	const auto & context = AudioSubmodule::Instance()->GetContext();
 	const float hertz = float(context.hertz);
@@ -20,7 +23,7 @@ bool SinWriter::Init()
 	return false;
 }
 
-bool SinWriter::Write (float * buffer, int32_t numFrames)
+bool SineTone::Write (float * buffer, int32_t numFrames)
 {
 	const auto & context = AudioSubmodule::Instance()->GetContext();
 	const float hertz = float(context.hertz);
@@ -38,4 +41,6 @@ bool SinWriter::Write (float * buffer, int32_t numFrames)
 		buffer[cursor] = 0.0f;
 	
 	return false;
+}
+
 }

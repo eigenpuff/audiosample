@@ -39,7 +39,7 @@ FMOD_RESULT PCMReadCallback_Writer(FMOD_SOUND * soundraw,  void * data, uint32_t
 	
 	float * buffer = (float *) data;
 	
-	WriterBase * writer;
+	AudioWriter::Base * writer;
 	FMOD_Sound_GetUserData(soundraw, (void**) &writer);
 	
 	if (writer)
@@ -52,7 +52,7 @@ FMOD_RESULT PCMReadCallback_Writer(FMOD_SOUND * soundraw,  void * data, uint32_t
 
 FMOD_RESULT PCMSetPosCallback_Initialize(FMOD_SOUND * soundraw, int subsound, uint32_t position, FMOD_TIMEUNIT postype)
 {
-	WriterBase * writer;
+	AudioWriter::Base * writer;
 	FMOD_Sound_GetUserData(soundraw, (void**) &writer);
 	if (writer && !writer->inited)
 		writer->Init();
@@ -62,7 +62,7 @@ FMOD_RESULT PCMSetPosCallback_Initialize(FMOD_SOUND * soundraw, int subsound, ui
 	return FMOD_OK;
 }
 
-AudioStream::AudioStream(FMOD::System * system, WriterBase * write) :
+AudioStream::AudioStream(FMOD::System * system, AudioWriter::Base * write) :
 	system(system), audioWriter(write)
 {
 	if (!system)
@@ -102,7 +102,7 @@ AudioStream::~AudioStream()
 	handle->release();
 }
 
-AudioStream * AudioStream::Create(FMOD::System * system, WriterBase * audioWriter)
+AudioStream * AudioStream::Create(FMOD::System * system, AudioWriter::Base * audioWriter)
 {
 	AudioStream * ret = new AudioStream(system, audioWriter);
 	return ret;
@@ -155,9 +155,3 @@ void AudioStream::Update(float dt)
 		Stop();
 }
 
-AudioStream * AudioSubmodule::CreateAudioStream(WriterBase * audioWriter)
-{
-	AudioStream * ret = AudioStream::Create(system, audioWriter);
-	pool.push_back(ret);
-	return ret;
-}

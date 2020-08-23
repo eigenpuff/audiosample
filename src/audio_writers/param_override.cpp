@@ -8,7 +8,10 @@
 #include "audio_writers.h"
 #include "audio_module.h"
 
-bool WriterOverride::Init()
+namespace AudioWriter
+{
+
+bool ParamOverride::Init()
 {
 	if (child)
 	{
@@ -23,7 +26,7 @@ bool WriterOverride::Init()
 	return done;
 }
 
-void WriterOverride::CopyParams()
+void ParamOverride::CopyParams()
 {
 	child->gain = gain;
 	child->phase = phase;
@@ -31,7 +34,7 @@ void WriterOverride::CopyParams()
 	child->duration = duration;
 }
 
-bool WriterOverride::Write(float * buffer, int32_t numFrames)
+bool ParamOverride::Write(float * buffer, int32_t numFrames)
 {
 	const auto & context = AudioSubmodule::Instance()->GetContext();
 	const float hertz = float(context.hertz);
@@ -44,4 +47,6 @@ bool WriterOverride::Write(float * buffer, int32_t numFrames)
 		done = true;
 	
 	return done;
+}
+
 }
