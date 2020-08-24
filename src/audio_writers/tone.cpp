@@ -67,12 +67,6 @@ bool Tone::Write (float * buffer, int32_t numFrames)
 		}
 	}
 	
-	if (cursor < numFrames)
-	{
-		for( ; cursor < numFrames; cursor++, time += timeStep )
-			buffer[cursor++] = 0.0f;
-	}
-	
 	done = time >= duration;
 	return done;
 }

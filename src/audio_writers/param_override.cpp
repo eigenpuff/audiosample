@@ -44,24 +44,30 @@ bool ParamOverride::Write(float * buffer, int32_t numFrames)
 	
 	const float timeStep = float (numFrames) / hertz;
 	
+	float * writeBuffer = buffer;
+	int32_t writeFrames = numFrames;
+	
 	if (time < delay)
 	{
 		if (time + timeStep > delay)
 		{
 			float delayStep = delay - time;
 			float writeStep = timeStep - delayStep;
-			int32_t writeFrames = int32_t(writeStep * hertz);
+			writeFrames = int32_t(writeStep * hertz);
+			
 			int32_t writeStart = numFrames - writeFrames;
 			
+			// for right now we are developing assuming mono; at some
+			// point we will want to fix that.
 			int32_t channels = 1;
-			child->Write(buffer + (writeStart * channels), writeFrames);
+			writeBuffer = buffer + (writeStart * channels);
+			child->Write(writeBuffer, writeFrames);
 		}
 	}
 	else
 	{
-		done = child->Write(buffer, numFrames);
+		done = child->Write(writeBuffer, writeFrames);
 	}
-	
 	time += timeStep;
 	return done;
 }

@@ -39,6 +39,10 @@ FMOD_RESULT PCMReadCallback_Writer(FMOD_SOUND * soundraw,  void * data, uint32_t
 	
 	float * buffer = (float *) data;
 	
+	//over write with zeroes to make sure we have no garbage in
+	// in there to begin with
+	memset(buffer, 0, datalen);
+	
 	AudioWriter::Base * writer;
 	FMOD_Sound_GetUserData(soundraw, (void**) &writer);
 	

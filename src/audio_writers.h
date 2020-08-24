@@ -10,6 +10,7 @@
 
 #include <stdint.h>
 #include <vector>
+#include <deque>
 
 const float kTau = 6.28318530718f;
 
@@ -31,6 +32,8 @@ struct Base
 	virtual bool Init () = 0;
 	
 	// writes to a number of frames to a buffer, returns whether to be done
+	// Buffer is assumed to be zero filled or otherwise initialized before
+	// it arrives to this write.
 	virtual bool Write (float * buffer, int32_t numFrames) = 0;
 	virtual ~Base() {}
 };
@@ -79,14 +82,32 @@ struct ParamOverride : Base
 };
 
 
+//sequencer plays a bunch of sounds in sequence, with the
+// delay associated with each sound telling us when to start
+// each sound after the previous
 struct Sequencer : Base
 {
 	std::vector<Base*> children;
 	std::vector<float> delays;
-	std::vector<bool>  simulWithPrevious;
+	
+private:
+	//scratch variables, calculated upon play
+	float * scratchSpace = nullptr;
+	size_t scratchLen;
+	
+	std::vector<float> timeline;
+	int32_t timelineIndex = 0;
+	
+	int32_t queueIndex = 0;
+	std::deque<Base*> playQueue;
+	std::deque<float> timeQueue;
 
+public:
 	bool Init() override;
 	bool Write(float *buffer, int32_t numFrames) override;
+	
+	void CalcTotalTime();
+	void PushChild(Base * child, float cumulDelay);
 	
 	~Sequencer() override;
 };
@@ -101,18 +122,23 @@ struct Composite : Base
 	~Composite() override;
 };
 
-using EnvelopeFn = float(*) (float time, void *userData);
+struct EnvelopeBase
+{
+	virtual float operator () (float t) = 0;
+	virtual ~EnvelopeBase() {}
+};
 
 struct Envelope : Base
 {
 	Base * child;
-	Envelope(EnvelopeFn envFn) : envelope(envFn) {}
+	EnvelopeBase * envelope;
+	
+	Envelope(EnvelopeBase * envFn) : envelope(envFn) {}
 
 	bool Init() override;
 	bool Write(float *buffer, int32_t numFrames) override;
 	
 	~Envelope() override;
-	EnvelopeFn envelope;
 };
 
 using WaveFn = float (*) (float time, float pitch, float phase);
@@ -126,17 +152,39 @@ struct Tone: Base
 	WaveFn wave = nullptr;
 };
 
+// for Wave Generators
+// time is real time in seconds;
+// pitch is in hertz;
+// phase is a fraction of one wavecycle to offset by, -1 to 1
+
 float SineWave(float time, float pitch, float phase);
 float SawWave(float time, float pitch, float phase);
 float SquareWave(float time, float pitch, float phase);
 float TriangleWave(float time, float pitch, float phase);
 
-using EnvelopeFn = float(*) (float time, void *userData);
+// for envelopes
+// t is 0 - 1 of length over the whole playback
 
-float SineEnvelope(float time, void * userData);
-float SplineEnvelop(float time, void * userData);
-float AttackDecayEnvelope(float time, void * userData);
+struct SineEnvelope : EnvelopeBase
+{
+	float operator () (float t) override;
+};
 
+struct SplineEnvelope : EnvelopeBase
+{
+	std::vector<float> cp;
+	float operator () (float t) override;
+};
+
+struct AttackDecayEnvelope : EnvelopeBase
+{
+	float operator () (float t) override;
+};
+
+struct AttackSustainDecayEnvelope : EnvelopeBase
+{
+	float operator () (float t) override;
+};
 }
 
 #endif /* audio_writers_h */
