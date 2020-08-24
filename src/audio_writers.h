@@ -93,7 +93,7 @@ struct Sequencer : Base
 private:
 	//scratch variables, calculated upon play
 	float * scratchSpace = nullptr;
-	size_t scratchLen;
+	size_t scratchLen = 0;
 	
 	std::vector<float> timeline;
 	int32_t timelineIndex = 0;
@@ -116,8 +116,17 @@ struct Composite : Base
 {
 	std::vector<Base*> children;
 	
+private:
+	//scratch variables, calculated upon play
+	float * scratchSpace = nullptr;
+	size_t scratchLen = 0;
+
+public:
 	bool Init() override;
 	bool Write(float *buffer, int32_t numFrames) override;
+	
+	void PushChild(AudioWriter::Base * child);
+	bool DetermineDone();
 	
 	~Composite() override;
 };

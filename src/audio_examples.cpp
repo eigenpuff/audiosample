@@ -115,7 +115,6 @@ static NoteValue melody[] =
 	{ kNoteF1, 2.0f },	// Measure 8
 };
 
-
 float NoteStepToHertz(NoteStep steps)
 {
 	const float stepValue = powf(2.0f, 1.0f/12.0f);
@@ -124,17 +123,52 @@ float NoteStepToHertz(NoteStep steps)
 	return hertz;
 }
 
+AudioWriter::Base * GenerateNoteComposite(NoteValue note, bool downBeat, AudioWriter::WaveFn wave)
+{
+	float adjustGain = 0.35f;
+	float baseGain = adjustGain * (downBeat ? 1.0f : 0.70f);
+	float basePitch = NoteStepToHertz(note.note);
+	
+	AudioWriter::Tone * fund = new AudioWriter::Tone(wave);
+	fund->gain = baseGain * 0.5f;
+	fund->pitch = basePitch;
+	fund->duration = kBeatTime * note.duration * 1.1f;
+	
+	AudioWriter::Tone * second = new AudioWriter::Tone(wave);
+	second->gain = baseGain * 0.25f;
+	second->pitch = 2.0f * basePitch;
+	second->duration = kBeatTime * note.duration * 1.1f;
+	
+	AudioWriter::Tone * tert = new AudioWriter::Tone(wave);
+	tert->gain = baseGain * 0.125f;
+	tert->pitch = 4.0f * basePitch;
+	tert->duration = kBeatTime * note.duration * 1.1f;
+	
+	AudioWriter::Tone * quart = new AudioWriter::Tone(wave);
+	quart->gain = baseGain * 0.0625f;
+	quart->pitch = 8.0f * basePitch;
+	quart->duration = kBeatTime * note.duration * 1.1f;
+	
+	AudioWriter::Composite * comp = new AudioWriter::Composite();
+	comp->PushChild(fund);
+	comp->PushChild(second);
+	comp->PushChild(tert);
+	comp->PushChild(quart);
+	
+	return comp;
+}
+
 AudioWriter::Base * GenerateNoteWriter(NoteValue note, bool downBeat)
 {
 	if (note.note == kRest)
 		return nullptr;
 	
-	AudioWriter::Base * tone = new AudioWriter::Tone(AudioWriter::SineWave);
-	auto * param = new AudioWriter::ParamOverride();
+	auto * tone = GenerateNoteComposite(note, downBeat, AudioWriter::SineWave);
 	
 	auto * env = new AudioWriter::Envelope(new AudioWriter::AttackSustainDecayEnvelope);
 	env->child = tone;
 	
+	auto * param = new AudioWriter::ParamOverride();
 	param->gain = downBeat ? 1.0f : 0.70f;
 	param->pitch = NoteStepToHertz(note.note);
 	param->duration = kBeatTime * note.duration * 1.1f;
