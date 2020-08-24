@@ -11,13 +11,14 @@
 #include <math.h>
 
 static AudioStream * memStream = nullptr;
+static AudioStream * memStream2 = nullptr;
 
 const float kBeatsPerMinute = 80.0f;
 const float kBeatsPerSecond = kBeatsPerMinute / 60.0f;
 const float kBeatTime = 1.0f / kBeatsPerSecond;
 const float kAHertzValue = 440.0f;
 const int32_t kBeatsPerMeasure = 3;
-const int32_t kLeadInBeat = 1;
+const int32_t kLeadInBeat = 0;
 
 enum NoteStep
 {
@@ -31,12 +32,18 @@ enum NoteStep
 	kNoteA2 = 0,
 	kNoteBb2 = 1,
 	kNoteC2 = 3,
+	kNoteD2 = 5,
+	kNoteE2 = 7,
+	kNoteF2 = 8,
+	kNoteG2 = 10,
+	kNoteA3 = 12,
 	
 	kRest = 1024
 };
 
 struct NoteValue
 {
+	float startTime;
 	NoteStep note;
 	float duration;
 };
@@ -79,41 +86,81 @@ F - 2		F
 
 static NoteValue melody[] =
 {
-	{ kRest, 2.0f },	// Measure 0
-	{ kNoteC1, 0.75f },
-	{ kNoteC1, 0.25f },
+	{ 0.0f, kRest, 2.0f },	// Measure 0
+	{ 2.0f, kNoteC1, 0.75f },
+	{ 2.75f, kNoteC1, 0.25f },
 	
-	{ kNoteD1, 1.0f },	// Measure 1
-	{ kNoteC1, 1.0f },
-	{ kNoteF1, 1.0f },
+	{ 3.0f, kNoteD1, 1.0f },	// Measure 1
+	{ 4.0f, kNoteC1, 1.0f },
+	{ 5.0f, kNoteF1, 1.0f },
 	
-	{ kNoteE1, 2.0f },	// Measure 2
-	{ kNoteC1, 0.75f },
-	{ kNoteC1, 0.25f },
+	{ 6.0f, kNoteE1, 2.0f },	// Measure 2
+	{ 8.0f, kNoteC1, 0.75f },
+	{ 8.75f, kNoteC1, 0.25f },
 	
-	{ kNoteD1, 1.0f },	// Measure 3
-	{ kNoteC1, 1.0f },
-	{ kNoteG1, 1.0f },
+	{ 9.0f, kNoteD1, 1.0f },	// Measure 3
+	{ 10.0f, kNoteC1, 1.0f },
+	{ 11.0f, kNoteG1, 1.0f },
 	
-	{ kNoteF1, 2.0f },	// Measure 4
-	{ kNoteC1, 0.75f },
-	{ kNoteC1, 0.25 },
+	{ 12.0f, kNoteF1, 2.0f },	// Measure 4
+	{ 14.0f, kNoteC1, 0.75f },
+	{ 14.75f, kNoteC1, 0.25 },
 	
-	{ kNoteC2, 1.0f },	// Measure 5
-	{ kNoteA2, 1.0f },
-	{ kNoteF1, 1.0f },
+	{ 15.0f, kNoteC2, 1.0f },	// Measure 5
+	{ 16.0f, kNoteA2, 1.0f },
+	{ 17.0f, kNoteF1, 1.0f },
 	
-	{ kNoteE1, 1.0f },	// Measure 6
-	{ kNoteD1, 1.0f },
-	{ kNoteBb2, 0.75f },
-	{ kNoteBb2, 0.25f },
+	{ 18.0f, kNoteE1, 1.0f },	// Measure 6
+	{ 19.0f, kNoteD1, 1.0f },
+	{ 20.0f, kNoteBb2, 0.75f },
+	{ 20.75f, kNoteBb2, 0.25f },
 	
-	{ kNoteA2, 1.0f },	// Measure 7
-	{ kNoteF1, 1.0f },
-	{ kNoteG1, 1.0f },
+	{ 21.0f, kNoteA2, 1.0f },	// Measure 7
+	{ 22.0f, kNoteF1, 1.0f },
+	{ 23.0f, kNoteG1, 1.0f },
 	
-	{ kNoteF1, 2.0f },	// Measure 8
+	{ 24.0f, kNoteF1, 2.0f },	// Measure 8
 };
+
+static NoteValue harmony[] =
+{
+	{ 3.0f, kNoteA1, 2.75f },
+	{ 3.0f, kNoteC1, 2.75f },
+	{ 3.0f, kNoteF1, 2.75f },
+	
+	{ 6.0f, kNoteBb1, 2.75f },
+	{ 6.0f, kNoteC1, 2.75f },
+	{ 6.0f, kNoteG1, 2.75f },
+	
+	{ 9.0f, kNoteBb1, 2.75f },
+	{ 9.0f, kNoteC1, 2.75f },
+	{ 9.0f, kNoteG1, 2.75f },
+	
+	{ 12.0f, kNoteA1, 2.75f },
+	{ 12.0f, kNoteC1, 2.75f },
+	{ 12.0f, kNoteF1, 2.75f },
+	
+	{ 15.0f, kNoteA1, 2.75f },
+	{ 15.0f, kNoteC1, 2.75f },
+	{ 15.0f, kNoteF1, 2.75f },
+	
+	{ 18.0f, kNoteBb1, 2.75f },
+	{ 18.0f, kNoteD1, 2.75f },
+	{ 18.0f, kNoteF1, 2.75f },
+	
+	{ 21.0f, kNoteC1, 1.5f },
+	{ 21.0f, kNoteE1, 1.5f },
+	{ 21.0f, kNoteG1, 1.5f },
+	
+	{ 23.0f, kNoteC1, 1.0f },
+	{ 23.0f, kNoteE1, 1.0f },
+	{ 23.0f, kNoteBb2, 1.0f},
+	
+	{ 24.0f, kNoteF1, 2.75f },
+	{ 24.0f, kNoteA2, 2.75f },
+	{ 24.0f, kNoteC2, 2.75f },
+};
+
 
 float NoteStepToHertz(NoteStep steps)
 {
@@ -123,10 +170,8 @@ float NoteStepToHertz(NoteStep steps)
 	return hertz;
 }
 
-AudioWriter::Base * GenerateNoteComposite(NoteValue note, bool downBeat, AudioWriter::WaveFn wave)
+AudioWriter::Base * GenerateNoteComposite(NoteValue note, AudioWriter::WaveFn wave, float baseGain)
 {
-	float adjustGain = 0.35f;
-	float baseGain = adjustGain * (downBeat ? 1.0f : 0.70f);
 	float basePitch = NoteStepToHertz(note.note);
 	
 	AudioWriter::Tone * fund = new AudioWriter::Tone(wave);
@@ -158,18 +203,18 @@ AudioWriter::Base * GenerateNoteComposite(NoteValue note, bool downBeat, AudioWr
 	return comp;
 }
 
-AudioWriter::Base * GenerateNoteWriter(NoteValue note, bool downBeat)
+AudioWriter::Base * GenerateNoteWriter(NoteValue note, AudioWriter::WaveFn wave, float baseGain)
 {
 	if (note.note == kRest)
 		return nullptr;
 	
-	auto * tone = GenerateNoteComposite(note, downBeat, AudioWriter::SineWave);
+	auto * tone = GenerateNoteComposite(note, wave, baseGain);
 	
 	auto * env = new AudioWriter::Envelope(new AudioWriter::AttackSustainDecayEnvelope);
 	env->child = tone;
 	
 	auto * param = new AudioWriter::ParamOverride();
-	param->gain = downBeat ? 1.0f : 0.70f;
+	param->gain = 0.701f;
 	param->pitch = NoteStepToHertz(note.note);
 	param->duration = kBeatTime * note.duration * 1.1f;
 	
@@ -179,7 +224,7 @@ AudioWriter::Base * GenerateNoteWriter(NoteValue note, bool downBeat)
 
 AudioWriter::Base * SimpleTest()
 {
-	auto note = GenerateNoteWriter({kNoteA2, 2.0f}, false);
+	auto note = GenerateNoteWriter({0.0f, kNoteA2, 2.0f}, AudioWriter::SineWave, 0.35f);
 	auto treeNote = AudioWriter::Tree(note);
 	
 	auto * sin = new AudioWriter::Tone(AudioWriter::SawWave);
@@ -201,12 +246,28 @@ AudioWriter::Base * SequenceTest()
 {
 	auto * root = new AudioWriter::Sequencer();
 	
-	auto * note0 = GenerateNoteWriter({kNoteA2, 3.0f}, false);
+	auto * note0 = GenerateNoteWriter({0.25f, kNoteA2, 3.0f}, AudioWriter::SineWave, 0.35f);
 	root->PushChild(note0, 0.0f);
 	
-	auto * note1 = GenerateNoteWriter({kNoteBb2, 3.0f}, false);
+	auto * note1 = GenerateNoteWriter({2.5f, kNoteBb2, 3.0f}, AudioWriter::SineWave, 0.35f);
 	root->PushChild(note1, kBeatTime*3.5f);
 	
+	return root;
+}
+
+AudioWriter::Base * ChordTest()
+{
+	auto * root = new AudioWriter::Sequencer();
+	
+	auto * note0 = GenerateNoteWriter({0.0f, kNoteA2, 3.0f}, AudioWriter::SineWave, 0.35f);
+	root->PushChild(note0, 0.8f);
+	
+	auto * note1 = GenerateNoteWriter({0.0f, kNoteC2, 3.0f}, AudioWriter::SineWave, 0.35f);
+	root->PushChild(note1, 0.0f);
+	
+	auto * note2 = GenerateNoteWriter({0.0f, kNoteE2, 3.0f}, AudioWriter::SineWave, 0.35f);
+	root->PushChild(note2, 0.0f);
+
 	return root;
 }
 
@@ -214,48 +275,54 @@ AudioWriter::Base * ScaleTest()
 {
 	auto * root = new AudioWriter::Sequencer();
 	
-	auto * note0 = GenerateNoteWriter({kNoteA1, 1.0f}, false);
+	auto * note0 = GenerateNoteWriter({0.0f, kNoteA1, 1.0f}, AudioWriter::SineWave, 0.35f);
 	root->PushChild(note0, kBeatTime);
 	
-	auto * note1 = GenerateNoteWriter({kNoteBb1, 1.0f}, false);
+	auto * note1 = GenerateNoteWriter({1.0f, kNoteBb1, 1.0f}, AudioWriter::SineWave, 0.35f);
 	root->PushChild(note1, kBeatTime);
 	
-	auto * note2 = GenerateNoteWriter({kNoteC1, 1.0f}, false);
+	auto * note2 = GenerateNoteWriter({2.0f, kNoteC1, 1.0f}, AudioWriter::SineWave, 0.35f);
 	root->PushChild(note2, kBeatTime);
 	
-	auto * note3 = GenerateNoteWriter({kNoteD1, 1.0f}, false);
+	auto * note3 = GenerateNoteWriter({3.0f, kNoteD1, 1.0f}, AudioWriter::SineWave, 0.35f);
 	root->PushChild(note3, kBeatTime);
 	
-	auto * note4 = GenerateNoteWriter({kNoteE1, 1.0f}, false);
+	auto * note4 = GenerateNoteWriter({4.0f, kNoteE1, 1.0f}, AudioWriter::SineWave, 0.35f);
 	root->PushChild(note4, kBeatTime);
 	
-	auto * note5 = GenerateNoteWriter({kNoteF1, 1.0f}, false);
+	auto * note5 = GenerateNoteWriter({5.0f, kNoteF1, 1.0f}, AudioWriter::SineWave, 0.35f);
 	root->PushChild(note5, kBeatTime);
 	
-	auto * note6 = GenerateNoteWriter({kNoteG1, 1.0f}, false);
+	auto * note6 = GenerateNoteWriter({6.0f, kNoteG1, 1.0f}, AudioWriter::SineWave, 0.35f);
 	root->PushChild(note6, kBeatTime);
 	
-	auto * note7 = GenerateNoteWriter({kNoteA2, 1.0f}, false);
+	auto * note7 = GenerateNoteWriter({7.0f, kNoteA2, 1.0f}, AudioWriter::SineWave, 0.35f);
 	root->PushChild(note7, kBeatTime);
 	
-	auto * note8 = GenerateNoteWriter({kNoteA1, 1.0f}, false);
+	auto * note8 = GenerateNoteWriter({8.0f, kNoteA1, 1.0f}, AudioWriter::SineWave, 0.35f);
 	root->PushChild(note8, kBeatTime);
 	
 	return root;
 }
 
-AudioWriter::Base * MelodyTest()
+AudioWriter::Base * SequenceGenerator(NoteValue *notes, int32_t len, AudioWriter::WaveFn wave, float baseGain)
 {
 	auto * root = new AudioWriter::Sequencer();
-	int32_t arrSize = sizeof(melody) / sizeof(melody[0]);
-	for (int32_t ord = 0; ord < arrSize; ord++)
+	for (int32_t ord = 0; ord < len; ord++)
 	{
-		auto & noteData = melody[ord];
-		auto * noteInst = GenerateNoteWriter(noteData, (ord + kLeadInBeat) % kBeatsPerMeasure == 0);
+		auto & noteData = notes[ord];
+		
+		//Note this doens't handle successive rests
+		if (noteData.note == kRest)
+			continue;
+		
+		auto * noteInst = GenerateNoteWriter(noteData, wave, baseGain);
 		
 		float noteDelay = 0.0f;
 		if (ord > 0)
-			noteDelay = melody[ord - 1].duration;
+			noteDelay = notes[ord].startTime - notes[ord - 1].startTime;
+		else
+			noteDelay = notes[ord].startTime;
 		
 		root->PushChild(noteInst,noteDelay);
 	}
@@ -263,20 +330,37 @@ AudioWriter::Base * MelodyTest()
 	return root;
 }
 
+AudioWriter::Base * MelodyTest()
+{
+	return SequenceGenerator(melody, sizeof(melody) / sizeof(melody[0]), AudioWriter::SineWave, 0.35f);
+}
+
+AudioWriter::Base * HarmonyTest()
+{
+	return SequenceGenerator(harmony, sizeof(harmony)/sizeof(harmony[0]), AudioWriter::SawWave, 0.035f);
+}
+
 void AppWrapper::StartLogic()
 {
 	//auto * root = SimpleTest();
 	//auto * root = SequenceTest();
 	//auto * root = ScaleTest();
+	//auto * root = ChordTest();
 	auto * root = MelodyTest();
+	
 	memStream = m_audio.CreateAudioStream(root);
 	memStream->Start();
+	
+	auto * root2 = HarmonyTest();
+	
+	memStream2 = m_audio.CreateAudioStream(root2);
+	memStream2->Start();
 }
-
 
 void AppWrapper::UpdateLogic(float dt)
 {
 	memStream->Update(dt);
+	memStream2->Update(dt);
 	m_audio.UpdateAudioStream(dt);
 }
 
