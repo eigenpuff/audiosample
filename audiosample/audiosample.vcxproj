@@ -1,0 +1,390 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup Label="ProjectConfigurations">
+    <ProjectConfiguration Include="Debug|Win32">
+      <Configuration>Debug</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|Win32">
+      <Configuration>Release</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Debug|x64">
+      <Configuration>Debug</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|x64">
+      <Configuration>Release</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="..\3rdparty\bgapp\00-helloworld\helloworld.cpp" />
+    <ClCompile Include="..\3rdparty\bgapp\common\bgfx_utils.cpp" />
+    <ClCompile Include="..\3rdparty\bgapp\common\bounds.cpp" />
+    <ClCompile Include="..\3rdparty\bgapp\common\camera.cpp" />
+    <ClCompile Include="..\3rdparty\bgapp\common\cube_atlas.cpp" />
+    <ClCompile Include="..\3rdparty\bgapp\common\debugdraw\debugdraw.cpp" />
+    <ClCompile Include="..\3rdparty\bgapp\common\entry\cmd.cpp" />
+    <ClCompile Include="..\3rdparty\bgapp\common\entry\dialog.cpp" />
+    <ClCompile Include="..\3rdparty\bgapp\common\entry\entry.cpp" />
+    <ClCompile Include="..\3rdparty\bgapp\common\entry\entry_android.cpp" />
+    <ClCompile Include="..\3rdparty\bgapp\common\entry\entry_glfw.cpp" />
+    <ClCompile Include="..\3rdparty\bgapp\common\entry\entry_html5.cpp" />
+    <ClCompile Include="..\3rdparty\bgapp\common\entry\entry_noop.cpp" />
+    <ClCompile Include="..\3rdparty\bgapp\common\entry\entry_sdl.cpp" />
+    <ClCompile Include="..\3rdparty\bgapp\common\entry\entry_windows.cpp" />
+    <ClCompile Include="..\3rdparty\bgapp\common\entry\entry_x11.cpp" />
+    <ClCompile Include="..\3rdparty\bgapp\common\entry\input.cpp" />
+    <ClCompile Include="..\3rdparty\bgapp\common\example-glue.cpp" />
+    <ClCompile Include="..\3rdparty\bgapp\common\font\font_manager.cpp" />
+    <ClCompile Include="..\3rdparty\bgapp\common\font\text_buffer_manager.cpp" />
+    <ClCompile Include="..\3rdparty\bgapp\common\font\text_metrics.cpp" />
+    <ClCompile Include="..\3rdparty\bgapp\common\font\utf8.cpp" />
+    <ClCompile Include="..\3rdparty\bgapp\common\imgui\imgui.cpp" />
+    <ClCompile Include="..\3rdparty\bgapp\common\nanovg\nanovg.cpp" />
+    <ClCompile Include="..\3rdparty\bgapp\common\nanovg\nanovg_bgfx.cpp" />
+    <ClCompile Include="..\3rdparty\bgapp\common\ps\particle_system.cpp" />
+    <ClCompile Include="..\src\audio_examples.cpp" />
+    <ClCompile Include="..\src\audio_module.cpp" />
+    <ClCompile Include="..\src\audio_stream.cpp" />
+    <ClCompile Include="..\src\audio_writers\composite.cpp" />
+    <ClCompile Include="..\src\audio_writers\envelope.cpp" />
+    <ClCompile Include="..\src\audio_writers\param_override.cpp" />
+    <ClCompile Include="..\src\audio_writers\sequencer.cpp" />
+    <ClCompile Include="..\src\audio_writers\tone.cpp" />
+    <ClCompile Include="..\src\entry_point.cpp" />
+    <ClCompile Include="..\src\presentation_modules.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="..\3rdparty\bgapp\common\aviwriter.h" />
+    <ClInclude Include="..\3rdparty\bgapp\common\bgfx_utils.h" />
+    <ClInclude Include="..\3rdparty\bgapp\common\bounds.h" />
+    <ClInclude Include="..\3rdparty\bgapp\common\camera.h" />
+    <ClInclude Include="..\3rdparty\bgapp\common\common.h" />
+    <ClInclude Include="..\3rdparty\bgapp\common\cube_atlas.h" />
+    <ClInclude Include="..\3rdparty\bgapp\common\debugdraw\debugdraw.h" />
+    <ClInclude Include="..\3rdparty\bgapp\common\debugdraw\fs_debugdraw_fill.bin.h" />
+    <ClInclude Include="..\3rdparty\bgapp\common\debugdraw\fs_debugdraw_fill_lit.bin.h" />
+    <ClInclude Include="..\3rdparty\bgapp\common\debugdraw\fs_debugdraw_fill_texture.bin.h" />
+    <ClInclude Include="..\3rdparty\bgapp\common\debugdraw\fs_debugdraw_lines.bin.h" />
+    <ClInclude Include="..\3rdparty\bgapp\common\debugdraw\fs_debugdraw_lines_stipple.bin.h" />
+    <ClInclude Include="..\3rdparty\bgapp\common\debugdraw\vs_debugdraw_fill.bin.h" />
+    <ClInclude Include="..\3rdparty\bgapp\common\debugdraw\vs_debugdraw_fill_lit.bin.h" />
+    <ClInclude Include="..\3rdparty\bgapp\common\debugdraw\vs_debugdraw_fill_lit_mesh.bin.h" />
+    <ClInclude Include="..\3rdparty\bgapp\common\debugdraw\vs_debugdraw_fill_mesh.bin.h" />
+    <ClInclude Include="..\3rdparty\bgapp\common\debugdraw\vs_debugdraw_fill_texture.bin.h" />
+    <ClInclude Include="..\3rdparty\bgapp\common\debugdraw\vs_debugdraw_lines.bin.h" />
+    <ClInclude Include="..\3rdparty\bgapp\common\debugdraw\vs_debugdraw_lines_stipple.bin.h" />
+    <ClInclude Include="..\3rdparty\bgapp\common\entry\cmd.h" />
+    <ClInclude Include="..\3rdparty\bgapp\common\entry\dbg.h" />
+    <ClInclude Include="..\3rdparty\bgapp\common\entry\dialog.h" />
+    <ClInclude Include="..\3rdparty\bgapp\common\entry\entry.h" />
+    <ClInclude Include="..\3rdparty\bgapp\common\entry\entry_p.h" />
+    <ClInclude Include="..\3rdparty\bgapp\common\entry\input.h" />
+    <ClInclude Include="..\3rdparty\bgapp\common\font\font_manager.h" />
+    <ClInclude Include="..\3rdparty\bgapp\common\font\fs_font_basic.bin.h" />
+    <ClInclude Include="..\3rdparty\bgapp\common\font\fs_font_distance_field.bin.h" />
+    <ClInclude Include="..\3rdparty\bgapp\common\font\fs_font_distance_field_subpixel.bin.h" />
+    <ClInclude Include="..\3rdparty\bgapp\common\font\text_buffer_manager.h" />
+    <ClInclude Include="..\3rdparty\bgapp\common\font\text_metrics.h" />
+    <ClInclude Include="..\3rdparty\bgapp\common\font\utf8.h" />
+    <ClInclude Include="..\3rdparty\bgapp\common\font\vs_font_basic.bin.h" />
+    <ClInclude Include="..\3rdparty\bgapp\common\font\vs_font_distance_field.bin.h" />
+    <ClInclude Include="..\3rdparty\bgapp\common\font\vs_font_distance_field_subpixel.bin.h" />
+    <ClInclude Include="..\3rdparty\bgapp\common\imgui\droidsans.ttf.h" />
+    <ClInclude Include="..\3rdparty\bgapp\common\imgui\fs_imgui_color.bin.h" />
+    <ClInclude Include="..\3rdparty\bgapp\common\imgui\fs_imgui_cubemap.bin.h" />
+    <ClInclude Include="..\3rdparty\bgapp\common\imgui\fs_imgui_image.bin.h" />
+    <ClInclude Include="..\3rdparty\bgapp\common\imgui\fs_imgui_image_swizz.bin.h" />
+    <ClInclude Include="..\3rdparty\bgapp\common\imgui\fs_imgui_latlong.bin.h" />
+    <ClInclude Include="..\3rdparty\bgapp\common\imgui\fs_imgui_texture.bin.h" />
+    <ClInclude Include="..\3rdparty\bgapp\common\imgui\fs_ocornut_imgui.bin.h" />
+    <ClInclude Include="..\3rdparty\bgapp\common\imgui\icons_font_awesome.ttf.h" />
+    <ClInclude Include="..\3rdparty\bgapp\common\imgui\icons_kenney.ttf.h" />
+    <ClInclude Include="..\3rdparty\bgapp\common\imgui\imgui.h" />
+    <ClInclude Include="..\3rdparty\bgapp\common\imgui\robotomono_regular.ttf.h" />
+    <ClInclude Include="..\3rdparty\bgapp\common\imgui\roboto_regular.ttf.h" />
+    <ClInclude Include="..\3rdparty\bgapp\common\imgui\vs_imgui_color.bin.h" />
+    <ClInclude Include="..\3rdparty\bgapp\common\imgui\vs_imgui_cubemap.bin.h" />
+    <ClInclude Include="..\3rdparty\bgapp\common\imgui\vs_imgui_image.bin.h" />
+    <ClInclude Include="..\3rdparty\bgapp\common\imgui\vs_imgui_latlong.bin.h" />
+    <ClInclude Include="..\3rdparty\bgapp\common\imgui\vs_imgui_texture.bin.h" />
+    <ClInclude Include="..\3rdparty\bgapp\common\imgui\vs_ocornut_imgui.bin.h" />
+    <ClInclude Include="..\3rdparty\bgapp\common\nanovg\fontstash.h" />
+    <ClInclude Include="..\3rdparty\bgapp\common\nanovg\fs_nanovg_fill.bin.h" />
+    <ClInclude Include="..\3rdparty\bgapp\common\nanovg\nanovg.h" />
+    <ClInclude Include="..\3rdparty\bgapp\common\nanovg\nanovg_bgfx.h" />
+    <ClInclude Include="..\3rdparty\bgapp\common\nanovg\vs_nanovg_fill.bin.h" />
+    <ClInclude Include="..\3rdparty\bgapp\common\packrect.h" />
+    <ClInclude Include="..\3rdparty\bgapp\common\ps\fs_particle.bin.h" />
+    <ClInclude Include="..\3rdparty\bgapp\common\ps\particle_system.h" />
+    <ClInclude Include="..\3rdparty\bgapp\common\ps\vs_particle.bin.h" />
+    <ClInclude Include="..\3rdparty\inc\bgfx\bgfx.h" />
+    <ClInclude Include="..\3rdparty\inc\bgfx\c99\bgfx.h" />
+    <ClInclude Include="..\3rdparty\inc\bgfx\defines.h" />
+    <ClInclude Include="..\3rdparty\inc\bgfx\embedded_shader.h" />
+    <ClInclude Include="..\3rdparty\inc\bgfx\platform.h" />
+    <ClInclude Include="..\3rdparty\inc\bimg\bimg.h" />
+    <ClInclude Include="..\3rdparty\inc\bimg\decode.h" />
+    <ClInclude Include="..\3rdparty\inc\bimg\encode.h" />
+    <ClInclude Include="..\3rdparty\inc\bx\allocator.h" />
+    <ClInclude Include="..\3rdparty\inc\bx\bx.h" />
+    <ClInclude Include="..\3rdparty\inc\bx\commandline.h" />
+    <ClInclude Include="..\3rdparty\inc\bx\config.h" />
+    <ClInclude Include="..\3rdparty\inc\bx\cpu.h" />
+    <ClInclude Include="..\3rdparty\inc\bx\debug.h" />
+    <ClInclude Include="..\3rdparty\inc\bx\easing.h" />
+    <ClInclude Include="..\3rdparty\inc\bx\endian.h" />
+    <ClInclude Include="..\3rdparty\inc\bx\error.h" />
+    <ClInclude Include="..\3rdparty\inc\bx\file.h" />
+    <ClInclude Include="..\3rdparty\inc\bx\filepath.h" />
+    <ClInclude Include="..\3rdparty\inc\bx\float4x4_t.h" />
+    <ClInclude Include="..\3rdparty\inc\bx\handlealloc.h" />
+    <ClInclude Include="..\3rdparty\inc\bx\hash.h" />
+    <ClInclude Include="..\3rdparty\inc\bx\macros.h" />
+    <ClInclude Include="..\3rdparty\inc\bx\maputil.h" />
+    <ClInclude Include="..\3rdparty\inc\bx\math.h" />
+    <ClInclude Include="..\3rdparty\inc\bx\mpscqueue.h" />
+    <ClInclude Include="..\3rdparty\inc\bx\mutex.h" />
+    <ClInclude Include="..\3rdparty\inc\bx\os.h" />
+    <ClInclude Include="..\3rdparty\inc\bx\pixelformat.h" />
+    <ClInclude Include="..\3rdparty\inc\bx\platform.h" />
+    <ClInclude Include="..\3rdparty\inc\bx\process.h" />
+    <ClInclude Include="..\3rdparty\inc\bx\readerwriter.h" />
+    <ClInclude Include="..\3rdparty\inc\bx\ringbuffer.h" />
+    <ClInclude Include="..\3rdparty\inc\bx\rng.h" />
+    <ClInclude Include="..\3rdparty\inc\bx\semaphore.h" />
+    <ClInclude Include="..\3rdparty\inc\bx\settings.h" />
+    <ClInclude Include="..\3rdparty\inc\bx\simd_t.h" />
+    <ClInclude Include="..\3rdparty\inc\bx\sort.h" />
+    <ClInclude Include="..\3rdparty\inc\bx\spscqueue.h" />
+    <ClInclude Include="..\3rdparty\inc\bx\string.h" />
+    <ClInclude Include="..\3rdparty\inc\bx\thread.h" />
+    <ClInclude Include="..\3rdparty\inc\bx\timer.h" />
+    <ClInclude Include="..\3rdparty\inc\bx\uint32_t.h" />
+    <ClInclude Include="..\3rdparty\inc\bx\url.h" />
+    <ClInclude Include="..\3rdparty\inc\fmod\fmod.h" />
+    <ClInclude Include="..\3rdparty\inc\fmod\fmod.hpp" />
+    <ClInclude Include="..\3rdparty\inc\fmod\fmod_codec.h" />
+    <ClInclude Include="..\3rdparty\inc\fmod\fmod_common.h" />
+    <ClInclude Include="..\3rdparty\inc\fmod\fmod_dsp.h" />
+    <ClInclude Include="..\3rdparty\inc\fmod\fmod_dsp_effects.h" />
+    <ClInclude Include="..\3rdparty\inc\fmod\fmod_errors.h" />
+    <ClInclude Include="..\3rdparty\inc\fmod\fmod_output.h" />
+    <ClInclude Include="..\src\audio_module.h" />
+    <ClInclude Include="..\src\audio_stream.h" />
+    <ClInclude Include="..\src\audio_writers.h" />
+    <ClInclude Include="..\src\entry_point.h" />
+    <ClInclude Include="..\src\presentation_modules.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="..\3rdparty\bgapp\common\common.sh" />
+    <None Include="..\3rdparty\bgapp\common\debugdraw\fs_debugdraw_fill.sc" />
+    <None Include="..\3rdparty\bgapp\common\debugdraw\fs_debugdraw_fill_lit.sc" />
+    <None Include="..\3rdparty\bgapp\common\debugdraw\fs_debugdraw_fill_texture.sc" />
+    <None Include="..\3rdparty\bgapp\common\debugdraw\fs_debugdraw_lines.sc" />
+    <None Include="..\3rdparty\bgapp\common\debugdraw\fs_debugdraw_lines_stipple.sc" />
+    <None Include="..\3rdparty\bgapp\common\debugdraw\makefile" />
+    <None Include="..\3rdparty\bgapp\common\debugdraw\varying.def.sc" />
+    <None Include="..\3rdparty\bgapp\common\debugdraw\vs_debugdraw_fill.sc" />
+    <None Include="..\3rdparty\bgapp\common\debugdraw\vs_debugdraw_fill_lit.sc" />
+    <None Include="..\3rdparty\bgapp\common\debugdraw\vs_debugdraw_fill_lit_mesh.sc" />
+    <None Include="..\3rdparty\bgapp\common\debugdraw\vs_debugdraw_fill_mesh.sc" />
+    <None Include="..\3rdparty\bgapp\common\debugdraw\vs_debugdraw_fill_texture.sc" />
+    <None Include="..\3rdparty\bgapp\common\debugdraw\vs_debugdraw_lines.sc" />
+    <None Include="..\3rdparty\bgapp\common\debugdraw\vs_debugdraw_lines_stipple.sc" />
+    <None Include="..\3rdparty\bgapp\common\entry\dialog_darwin.mm" />
+    <None Include="..\3rdparty\bgapp\common\entry\entry_ios.mm" />
+    <None Include="..\3rdparty\bgapp\common\entry\entry_osx.mm" />
+    <None Include="..\3rdparty\bgapp\common\entry\entry_winrt.cx" />
+    <None Include="..\3rdparty\bgapp\common\font\fs_font_basic.sc" />
+    <None Include="..\3rdparty\bgapp\common\font\fs_font_distance_field.sc" />
+    <None Include="..\3rdparty\bgapp\common\font\fs_font_distance_field_subpixel.sc" />
+    <None Include="..\3rdparty\bgapp\common\font\makefile" />
+    <None Include="..\3rdparty\bgapp\common\font\varying.def.sc" />
+    <None Include="..\3rdparty\bgapp\common\font\vs_font_basic.sc" />
+    <None Include="..\3rdparty\bgapp\common\font\vs_font_distance_field.sc" />
+    <None Include="..\3rdparty\bgapp\common\font\vs_font_distance_field_subpixel.sc" />
+    <None Include="..\3rdparty\bgapp\common\imgui\fs_imgui_color.sc" />
+    <None Include="..\3rdparty\bgapp\common\imgui\fs_imgui_cubemap.sc" />
+    <None Include="..\3rdparty\bgapp\common\imgui\fs_imgui_image.sc" />
+    <None Include="..\3rdparty\bgapp\common\imgui\fs_imgui_image_swizz.sc" />
+    <None Include="..\3rdparty\bgapp\common\imgui\fs_imgui_latlong.sc" />
+    <None Include="..\3rdparty\bgapp\common\imgui\fs_imgui_texture.sc" />
+    <None Include="..\3rdparty\bgapp\common\imgui\fs_ocornut_imgui.sc" />
+    <None Include="..\3rdparty\bgapp\common\imgui\makefile" />
+    <None Include="..\3rdparty\bgapp\common\imgui\varying.def.sc" />
+    <None Include="..\3rdparty\bgapp\common\imgui\vs_imgui_color.sc" />
+    <None Include="..\3rdparty\bgapp\common\imgui\vs_imgui_cubemap.sc" />
+    <None Include="..\3rdparty\bgapp\common\imgui\vs_imgui_image.sc" />
+    <None Include="..\3rdparty\bgapp\common\imgui\vs_imgui_latlong.sc" />
+    <None Include="..\3rdparty\bgapp\common\imgui\vs_imgui_texture.sc" />
+    <None Include="..\3rdparty\bgapp\common\imgui\vs_ocornut_imgui.sc" />
+    <None Include="..\3rdparty\bgapp\common\nanovg\fs_nanovg_fill.sc" />
+    <None Include="..\3rdparty\bgapp\common\nanovg\makefile" />
+    <None Include="..\3rdparty\bgapp\common\nanovg\varying.def.sc" />
+    <None Include="..\3rdparty\bgapp\common\nanovg\vs_nanovg_fill.sc" />
+    <None Include="..\3rdparty\bgapp\common\ps\fs_particle.sc" />
+    <None Include="..\3rdparty\bgapp\common\ps\varying.def.sc" />
+    <None Include="..\3rdparty\bgapp\common\ps\vs_particle.sc" />
+    <None Include="..\3rdparty\bgapp\common\shaderlib.sh" />
+    <None Include="..\3rdparty\inc\bx\inline\allocator.inl" />
+    <None Include="..\3rdparty\inc\bx\inline\bx.inl" />
+    <None Include="..\3rdparty\inc\bx\inline\cpu.inl" />
+    <None Include="..\3rdparty\inc\bx\inline\easing.inl" />
+    <None Include="..\3rdparty\inc\bx\inline\endian.inl" />
+    <None Include="..\3rdparty\inc\bx\inline\error.inl" />
+    <None Include="..\3rdparty\inc\bx\inline\float4x4_t.inl" />
+    <None Include="..\3rdparty\inc\bx\inline\handlealloc.inl" />
+    <None Include="..\3rdparty\inc\bx\inline\hash.inl" />
+    <None Include="..\3rdparty\inc\bx\inline\math.inl" />
+    <None Include="..\3rdparty\inc\bx\inline\mpscqueue.inl" />
+    <None Include="..\3rdparty\inc\bx\inline\mutex.inl" />
+    <None Include="..\3rdparty\inc\bx\inline\pixelformat.inl" />
+    <None Include="..\3rdparty\inc\bx\inline\readerwriter.inl" />
+    <None Include="..\3rdparty\inc\bx\inline\ringbuffer.inl" />
+    <None Include="..\3rdparty\inc\bx\inline\rng.inl" />
+    <None Include="..\3rdparty\inc\bx\inline\simd128_langext.inl" />
+    <None Include="..\3rdparty\inc\bx\inline\simd128_neon.inl" />
+    <None Include="..\3rdparty\inc\bx\inline\simd128_ref.inl" />
+    <None Include="..\3rdparty\inc\bx\inline\simd128_sse.inl" />
+    <None Include="..\3rdparty\inc\bx\inline\simd128_swizzle.inl" />
+    <None Include="..\3rdparty\inc\bx\inline\simd256_avx.inl" />
+    <None Include="..\3rdparty\inc\bx\inline\simd256_ref.inl" />
+    <None Include="..\3rdparty\inc\bx\inline\simd_ni.inl" />
+    <None Include="..\3rdparty\inc\bx\inline\sort.inl" />
+    <None Include="..\3rdparty\inc\bx\inline\spscqueue.inl" />
+    <None Include="..\3rdparty\inc\bx\inline\string.inl" />
+    <None Include="..\3rdparty\inc\bx\inline\uint32_t.inl" />
+  </ItemGroup>
+  <PropertyGroup Label="Globals">
+    <VCProjectVersion>16.0</VCProjectVersion>
+    <Keyword>Win32Proj</Keyword>
+    <ProjectGuid>{bc8ffc16-3741-466d-bb53-89dff8a0367f}</ProjectGuid>
+    <RootNamespace>audiosample2</RootNamespace>
+    <WindowsTargetPlatformVersion>10.0</WindowsTargetPlatformVersion>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
+    <ConfigurationType>Application</ConfigurationType>
+    <UseDebugLibraries>true</UseDebugLibraries>
+    <PlatformToolset>v142</PlatformToolset>
+    <CharacterSet>Unicode</CharacterSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
+    <ConfigurationType>Application</ConfigurationType>
+    <UseDebugLibraries>false</UseDebugLibraries>
+    <PlatformToolset>v142</PlatformToolset>
+    <WholeProgramOptimization>true</WholeProgramOptimization>
+    <CharacterSet>Unicode</CharacterSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" Label="Configuration">
+    <ConfigurationType>Application</ConfigurationType>
+    <UseDebugLibraries>true</UseDebugLibraries>
+    <PlatformToolset>v142</PlatformToolset>
+    <CharacterSet>Unicode</CharacterSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'" Label="Configuration">
+    <ConfigurationType>Application</ConfigurationType>
+    <UseDebugLibraries>false</UseDebugLibraries>
+    <PlatformToolset>v142</PlatformToolset>
+    <WholeProgramOptimization>true</WholeProgramOptimization>
+    <CharacterSet>Unicode</CharacterSet>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
+  <ImportGroup Label="ExtensionSettings">
+  </ImportGroup>
+  <ImportGroup Label="Shared">
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <PropertyGroup Label="UserMacros" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <LinkIncremental>true</LinkIncremental>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <LinkIncremental>false</LinkIncremental>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <LinkIncremental>true</LinkIncremental>
+    <IncludePath>C:\Users\Mike\projects\audiosample\3rdparty\inc;$(IncludePath)</IncludePath>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+    <LinkIncremental>false</LinkIncremental>
+    <IncludePath>C:\Users\Mike\projects\audiosample\3rdparty\inc;$(IncludePath)</IncludePath>
+  </PropertyGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <ClCompile>
+      <WarningLevel>Level3</WarningLevel>
+      <SDLCheck>true</SDLCheck>
+      <PreprocessorDefinitions>WIN32;_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <ConformanceMode>true</ConformanceMode>
+    </ClCompile>
+    <Link>
+      <SubSystem>Console</SubSystem>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <ClCompile>
+      <WarningLevel>Level3</WarningLevel>
+      <FunctionLevelLinking>true</FunctionLevelLinking>
+      <IntrinsicFunctions>true</IntrinsicFunctions>
+      <SDLCheck>true</SDLCheck>
+      <PreprocessorDefinitions>WIN32;NDEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <ConformanceMode>true</ConformanceMode>
+    </ClCompile>
+    <Link>
+      <SubSystem>Console</SubSystem>
+      <EnableCOMDATFolding>true</EnableCOMDATFolding>
+      <OptimizeReferences>true</OptimizeReferences>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <ClCompile>
+      <WarningLevel>Level3</WarningLevel>
+      <SDLCheck>true</SDLCheck>
+      <PreprocessorDefinitions>_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <ConformanceMode>true</ConformanceMode>
+      <AdditionalIncludeDirectories>$(ProjectDir)..\3rdparty\inc;$(ProjectDir)..\3rdparty\bgapp\common;$(ProjectDir)..\src;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+    </ClCompile>
+    <Link>
+      <SubSystem>Console</SubSystem>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <AdditionalLibraryDirectories>$(ProjectDir)\3rdparty\lib\win</AdditionalLibraryDirectories>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+    <ClCompile>
+      <WarningLevel>Level3</WarningLevel>
+      <FunctionLevelLinking>true</FunctionLevelLinking>
+      <IntrinsicFunctions>true</IntrinsicFunctions>
+      <SDLCheck>true</SDLCheck>
+      <PreprocessorDefinitions>NDEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <ConformanceMode>true</ConformanceMode>
+      <AdditionalIncludeDirectories>$(ProjectDir)..\3rdparty\inc;$(ProjectDir)..\3rdparty\bgapp\common;$(ProjectDir)..\src;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+    </ClCompile>
+    <Link>
+      <SubSystem>Console</SubSystem>
+      <EnableCOMDATFolding>true</EnableCOMDATFolding>
+      <OptimizeReferences>true</OptimizeReferences>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <AdditionalLibraryDirectories>$(ProjectDir)\3rdparty\lib\win</AdditionalLibraryDirectories>
+    </Link>
+  </ItemDefinitionGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
+  <ImportGroup Label="ExtensionTargets">
+  </ImportGroup>
+</Project>
