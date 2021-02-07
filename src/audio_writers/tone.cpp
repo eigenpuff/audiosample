@@ -20,20 +20,26 @@ float SineWave(float time, float pitch, float phase)
 
 float SawWave(float time, float pitch, float phase)
 {
-	return fmod(time+phase, 1.0f/pitch) * pitch;
+	return 2.0f * fmod(time+phase, 1.0f/pitch) * pitch - 1.0f;
 }
 
 float SquareWave(float time, float pitch, float phase)
 {
 	//hacky but works for testing purposes
-	const float mod = 1.0f / pitch;
+	const float mod = 1.0f / (2.0f * pitch);
 	const float value = fmod(time + phase, 2.0f * mod);
 	return value < mod ? 1.0f : -1.0f;
 }
 
 float TriangleWave(float time, float pitch, float phase)
 {
-	return 0;
+	const float mod = 1.0f / (2.0f * pitch);
+	const float value = fmod(time + phase, 2.0f * mod);
+
+	if (value < mod)
+		return 2.0f * value / mod - 1.0f;
+
+	return 2.0f * (1.0f - (value - mod)/mod) - 1.0f;
 }
 
 bool Tone::Init()
@@ -48,17 +54,17 @@ bool Tone::Write (float * buffer, int32_t numFrames)
 	const auto & context = AudioSubmodule::Instance()->GetContext();
 	const float hertz = float(context.hertz);
 	const float timeStep = 1.0f / float(hertz);
-	
+
 	int32_t cursor = 0;
-	
+
 	if (time < duration)
 	{
 		float writeTime = duration - time;
 		int32_t writeFrames = int32_t(writeTime * hertz);
-		
+
 		if (writeFrames > numFrames)
 			writeFrames = numFrames;
-		
+
 		for( int32_t writeCursor = 0; writeCursor < writeFrames && cursor < numFrames; writeCursor++, time += timeStep )
 		{
 			float value = wave(time, pitch, phase/hertz);
@@ -66,7 +72,7 @@ bool Tone::Write (float * buffer, int32_t numFrames)
 			buffer[cursor++] = value;
 		}
 	}
-	
+
 	done = time >= duration;
 	return done;
 }
