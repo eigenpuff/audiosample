@@ -2,3 +2,11 @@
 DerivedData/*
 .DS_Store
 */lib/*
+
+audiosample/.vs/
+
+audiosample/Debug/
+
+audiosample/x64/
+
+*.user

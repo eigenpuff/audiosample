@@ -11,7 +11,7 @@
 #include "audio_module.h"
 
 
-FMOD_RESULT PCMReadCallback_Zero(FMOD_SOUND * soundraw, void * data, uint32_t datalen)
+FMOD_RESULT F_CALL PCMReadCallback_Zero(FMOD_SOUND * soundraw, void * data, unsigned int datalen)
 {
 	uint8_t * buffer = (uint8_t *) data;
 	for (int c = 0; c < datalen; c++)
@@ -20,12 +20,12 @@ FMOD_RESULT PCMReadCallback_Zero(FMOD_SOUND * soundraw, void * data, uint32_t da
 	return FMOD_OK;
 }
 
-FMOD_RESULT PCMSetPosCallback_Null(FMOD_SOUND * soundraw, int subsound, uint32_t position, FMOD_TIMEUNIT postype)
+FMOD_RESULT F_CALL PCMSetPosCallback_Null(FMOD_SOUND * soundraw, int subsound, unsigned int position, FMOD_TIMEUNIT postype)
 {
 	return FMOD_OK;
 }
 
-FMOD_RESULT PCMReadCallback_Writer(FMOD_SOUND * soundraw,  void * data, uint32_t datalen)
+FMOD_RESULT F_CALL PCMReadCallback_Writer(FMOD_SOUND * soundraw,  void * data, unsigned int datalen)
 {
 	int32_t numChannels = 1;
 	int32_t numBits = 32;
@@ -54,7 +54,7 @@ FMOD_RESULT PCMReadCallback_Writer(FMOD_SOUND * soundraw,  void * data, uint32_t
 	return FMOD_OK;
 }
 
-FMOD_RESULT PCMSetPosCallback_Initialize(FMOD_SOUND * soundraw, int subsound, uint32_t position, FMOD_TIMEUNIT postype)
+FMOD_RESULT F_CALL PCMSetPosCallback_Initialize(FMOD_SOUND * soundraw, int subsound, unsigned int position, FMOD_TIMEUNIT postype)
 {
 	AudioWriter::Base * writer;
 	FMOD_Sound_GetUserData(soundraw, (void**) &writer);

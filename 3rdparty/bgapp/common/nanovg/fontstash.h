@@ -905,17 +905,27 @@ int fonsAddFont(FONScontext* stash, const char* name, const char* path)
 	unsigned char* data = NULL;
 
 	// Read in the font data.
-	fp = fopen(path, "rb");
-	if (fp == NULL) goto error;
+	auto err = fopen_s(&fp, path, "rb");
+	if (err != 0)
+		return FONS_INVALID;
+
+	if (fp == NULL) 
+		goto error;
+
 	fseek(fp,0,SEEK_END);
 	dataSize = (int)ftell(fp);
 	fseek(fp,0,SEEK_SET);
 	data = (unsigned char*)malloc(dataSize);
-	if (data == NULL) goto error;
+
+	if (data == NULL) 
+		goto error;
+
 	readed = fread(data, 1, dataSize, fp);
 	fclose(fp);
 	fp = 0;
-	if ((int)readed != dataSize) goto error;
+
+	if ((int)readed != dataSize) 
+		goto error;
 
 	return fonsAddFontMem(stash, name, data, dataSize, 1);
 
@@ -936,7 +946,7 @@ int fonsAddFontMem(FONScontext* stash, const char* name, unsigned char* data, in
 
 	font = stash->fonts[idx];
 
-	strncpy(font->name, name, sizeof(font->name));
+	strncpy_s(font->name, name, sizeof(font->name));
 	font->name[sizeof(font->name)-1] = '\0';
 
 	// Init hash lookup.

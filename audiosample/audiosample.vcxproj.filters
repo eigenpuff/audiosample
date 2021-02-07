@@ -1,0 +1,774 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="Header Files">
+      <UniqueIdentifier>{93995380-89BD-4b04-88EB-625FBE52EBFB}</UniqueIdentifier>
+      <Extensions>h;hh;hpp;hxx;h++;hm;inl;inc;ipp;xsd</Extensions>
+    </Filter>
+    <Filter Include="source">
+      <UniqueIdentifier>{de789764-a6ca-4d54-8bf1-bff99f0cffbc}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="3rdparty">
+      <UniqueIdentifier>{827e650e-280e-4118-9f1a-b4b5ba504faa}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="3rdparty\bgapp">
+      <UniqueIdentifier>{a0b73c72-f7ec-4c75-9cc1-f4c22babeb7b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="3rdparty\bgapp\common">
+      <UniqueIdentifier>{fb4aafd4-a110-4b78-8d41-096c79d31111}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="3rdparty\bgapp\00-helloworld">
+      <UniqueIdentifier>{ab0f87a4-2fda-4490-8d8e-fe997955b074}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="3rdparty\bgapp\common\debugdraw">
+      <UniqueIdentifier>{1db13202-8279-4c94-b4f1-4deeff348832}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="3rdparty\bgapp\common\entry">
+      <UniqueIdentifier>{06d0e49d-e0e1-45f3-ba40-847f079a3c0a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="3rdparty\bgapp\common\font">
+      <UniqueIdentifier>{3e3989b9-331d-4984-b728-2d4bf30e4ef7}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="3rdparty\bgapp\common\imgui">
+      <UniqueIdentifier>{ca2d36cc-a97a-4af0-bbfc-bb36323a324f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="3rdparty\bgapp\common\nanovg">
+      <UniqueIdentifier>{157f5985-b661-4873-aa09-0a86ddb338fd}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="3rdparty\bgapp\common\ps">
+      <UniqueIdentifier>{21fb9935-f50a-43d1-af37-ab7fd2704cc2}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="3rdparty\inc">
+      <UniqueIdentifier>{46daed09-0c60-4a4c-93ed-ab3aee9217d5}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="source\audio_writers">
+      <UniqueIdentifier>{8315f083-6c3d-4f5c-95db-2fa18bb31354}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="3rdparty\inc\bx">
+      <UniqueIdentifier>{de446b10-d981-4322-b1f3-46f4514928e0}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="3rdparty\inc\bx\inline">
+      <UniqueIdentifier>{e4358865-c220-48e4-8e93-29cd414d40fa}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="3rdparty\inc\bgfx">
+      <UniqueIdentifier>{17e3be28-ce3d-460e-b989-79454546d98c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="3rdparty\inc\bgfx\C99">
+      <UniqueIdentifier>{5619c38d-e845-4ef3-882a-a9a4c9aa88bb}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="3rdparty\inc\bimg">
+      <UniqueIdentifier>{4312d262-bbfd-4141-bd38-b2aa72946546}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="3rdparty\inc\fmod">
+      <UniqueIdentifier>{3f14a1d0-363d-4014-9cf7-5e95646b051d}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="..\3rdparty\bgapp\00-helloworld\helloworld.cpp">
+      <Filter>3rdparty\bgapp\00-helloworld</Filter>
+    </ClCompile>
+    <ClCompile Include="..\3rdparty\bgapp\common\bgfx_utils.cpp">
+      <Filter>3rdparty\bgapp\common</Filter>
+    </ClCompile>
+    <ClCompile Include="..\3rdparty\bgapp\common\bounds.cpp">
+      <Filter>3rdparty\bgapp\common</Filter>
+    </ClCompile>
+    <ClCompile Include="..\3rdparty\bgapp\common\camera.cpp">
+      <Filter>3rdparty\bgapp\common</Filter>
+    </ClCompile>
+    <ClCompile Include="..\3rdparty\bgapp\common\cube_atlas.cpp">
+      <Filter>3rdparty\bgapp\common</Filter>
+    </ClCompile>
+    <ClCompile Include="..\3rdparty\bgapp\common\example-glue.cpp">
+      <Filter>3rdparty\bgapp\common</Filter>
+    </ClCompile>
+    <ClCompile Include="..\3rdparty\bgapp\common\debugdraw\debugdraw.cpp">
+      <Filter>3rdparty\bgapp\common\debugdraw</Filter>
+    </ClCompile>
+    <ClCompile Include="..\3rdparty\bgapp\common\entry\dialog.cpp">
+      <Filter>3rdparty\bgapp\common\entry</Filter>
+    </ClCompile>
+    <ClCompile Include="..\3rdparty\bgapp\common\entry\entry.cpp">
+      <Filter>3rdparty\bgapp\common\entry</Filter>
+    </ClCompile>
+    <ClCompile Include="..\3rdparty\bgapp\common\entry\entry_android.cpp">
+      <Filter>3rdparty\bgapp\common\entry</Filter>
+    </ClCompile>
+    <ClCompile Include="..\3rdparty\bgapp\common\entry\entry_glfw.cpp">
+      <Filter>3rdparty\bgapp\common\entry</Filter>
+    </ClCompile>
+    <ClCompile Include="..\3rdparty\bgapp\common\entry\entry_html5.cpp">
+      <Filter>3rdparty\bgapp\common\entry</Filter>
+    </ClCompile>
+    <ClCompile Include="..\3rdparty\bgapp\common\entry\entry_noop.cpp">
+      <Filter>3rdparty\bgapp\common\entry</Filter>
+    </ClCompile>
+    <ClCompile Include="..\3rdparty\bgapp\common\entry\entry_sdl.cpp">
+      <Filter>3rdparty\bgapp\common\entry</Filter>
+    </ClCompile>
+    <ClCompile Include="..\3rdparty\bgapp\common\entry\entry_windows.cpp">
+      <Filter>3rdparty\bgapp\common\entry</Filter>
+    </ClCompile>
+    <ClCompile Include="..\3rdparty\bgapp\common\entry\entry_x11.cpp">
+      <Filter>3rdparty\bgapp\common\entry</Filter>
+    </ClCompile>
+    <ClCompile Include="..\3rdparty\bgapp\common\entry\input.cpp">
+      <Filter>3rdparty\bgapp\common\entry</Filter>
+    </ClCompile>
+    <ClCompile Include="..\3rdparty\bgapp\common\entry\cmd.cpp">
+      <Filter>3rdparty\bgapp\common\entry</Filter>
+    </ClCompile>
+    <ClCompile Include="..\3rdparty\bgapp\common\font\text_buffer_manager.cpp">
+      <Filter>3rdparty\bgapp\common\font</Filter>
+    </ClCompile>
+    <ClCompile Include="..\3rdparty\bgapp\common\font\text_metrics.cpp">
+      <Filter>3rdparty\bgapp\common\font</Filter>
+    </ClCompile>
+    <ClCompile Include="..\3rdparty\bgapp\common\font\utf8.cpp">
+      <Filter>3rdparty\bgapp\common\font</Filter>
+    </ClCompile>
+    <ClCompile Include="..\3rdparty\bgapp\common\font\font_manager.cpp">
+      <Filter>3rdparty\bgapp\common\font</Filter>
+    </ClCompile>
+    <ClCompile Include="..\3rdparty\bgapp\common\imgui\imgui.cpp">
+      <Filter>3rdparty\bgapp\common\imgui</Filter>
+    </ClCompile>
+    <ClCompile Include="..\3rdparty\bgapp\common\nanovg\nanovg.cpp">
+      <Filter>3rdparty\bgapp\common\nanovg</Filter>
+    </ClCompile>
+    <ClCompile Include="..\3rdparty\bgapp\common\nanovg\nanovg_bgfx.cpp">
+      <Filter>3rdparty\bgapp\common\nanovg</Filter>
+    </ClCompile>
+    <ClCompile Include="..\3rdparty\bgapp\common\ps\particle_system.cpp">
+      <Filter>3rdparty\bgapp\common\ps</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\entry_point.cpp">
+      <Filter>source</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\presentation_modules.cpp">
+      <Filter>source</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\audio_examples.cpp">
+      <Filter>source</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\audio_module.cpp">
+      <Filter>source</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\audio_stream.cpp">
+      <Filter>source</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\audio_writers\envelope.cpp">
+      <Filter>source\audio_writers</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\audio_writers\param_override.cpp">
+      <Filter>source\audio_writers</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\audio_writers\sequencer.cpp">
+      <Filter>source\audio_writers</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\audio_writers\tone.cpp">
+      <Filter>source\audio_writers</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\audio_writers\composite.cpp">
+      <Filter>source\audio_writers</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="..\3rdparty\bgapp\common\bgfx_utils.h">
+      <Filter>3rdparty\bgapp\common</Filter>
+    </ClInclude>
+    <ClInclude Include="..\3rdparty\bgapp\common\bounds.h">
+      <Filter>3rdparty\bgapp\common</Filter>
+    </ClInclude>
+    <ClInclude Include="..\3rdparty\bgapp\common\camera.h">
+      <Filter>3rdparty\bgapp\common</Filter>
+    </ClInclude>
+    <ClInclude Include="..\3rdparty\bgapp\common\common.h">
+      <Filter>3rdparty\bgapp\common</Filter>
+    </ClInclude>
+    <ClInclude Include="..\3rdparty\bgapp\common\cube_atlas.h">
+      <Filter>3rdparty\bgapp\common</Filter>
+    </ClInclude>
+    <ClInclude Include="..\3rdparty\bgapp\common\packrect.h">
+      <Filter>3rdparty\bgapp\common</Filter>
+    </ClInclude>
+    <ClInclude Include="..\3rdparty\bgapp\common\aviwriter.h">
+      <Filter>3rdparty\bgapp\common</Filter>
+    </ClInclude>
+    <ClInclude Include="..\3rdparty\bgapp\common\debugdraw\fs_debugdraw_lines.bin.h">
+      <Filter>3rdparty\bgapp\common\debugdraw</Filter>
+    </ClInclude>
+    <ClInclude Include="..\3rdparty\bgapp\common\debugdraw\fs_debugdraw_lines_stipple.bin.h">
+      <Filter>3rdparty\bgapp\common\debugdraw</Filter>
+    </ClInclude>
+    <ClInclude Include="..\3rdparty\bgapp\common\debugdraw\vs_debugdraw_fill.bin.h">
+      <Filter>3rdparty\bgapp\common\debugdraw</Filter>
+    </ClInclude>
+    <ClInclude Include="..\3rdparty\bgapp\common\debugdraw\vs_debugdraw_fill_lit.bin.h">
+      <Filter>3rdparty\bgapp\common\debugdraw</Filter>
+    </ClInclude>
+    <ClInclude Include="..\3rdparty\bgapp\common\debugdraw\vs_debugdraw_fill_lit_mesh.bin.h">
+      <Filter>3rdparty\bgapp\common\debugdraw</Filter>
+    </ClInclude>
+    <ClInclude Include="..\3rdparty\bgapp\common\debugdraw\vs_debugdraw_fill_mesh.bin.h">
+      <Filter>3rdparty\bgapp\common\debugdraw</Filter>
+    </ClInclude>
+    <ClInclude Include="..\3rdparty\bgapp\common\debugdraw\vs_debugdraw_fill_texture.bin.h">
+      <Filter>3rdparty\bgapp\common\debugdraw</Filter>
+    </ClInclude>
+    <ClInclude Include="..\3rdparty\bgapp\common\debugdraw\vs_debugdraw_lines.bin.h">
+      <Filter>3rdparty\bgapp\common\debugdraw</Filter>
+    </ClInclude>
+    <ClInclude Include="..\3rdparty\bgapp\common\debugdraw\vs_debugdraw_lines_stipple.bin.h">
+      <Filter>3rdparty\bgapp\common\debugdraw</Filter>
+    </ClInclude>
+    <ClInclude Include="..\3rdparty\bgapp\common\debugdraw\debugdraw.h">
+      <Filter>3rdparty\bgapp\common\debugdraw</Filter>
+    </ClInclude>
+    <ClInclude Include="..\3rdparty\bgapp\common\debugdraw\fs_debugdraw_fill.bin.h">
+      <Filter>3rdparty\bgapp\common\debugdraw</Filter>
+    </ClInclude>
+    <ClInclude Include="..\3rdparty\bgapp\common\debugdraw\fs_debugdraw_fill_lit.bin.h">
+      <Filter>3rdparty\bgapp\common\debugdraw</Filter>
+    </ClInclude>
+    <ClInclude Include="..\3rdparty\bgapp\common\debugdraw\fs_debugdraw_fill_texture.bin.h">
+      <Filter>3rdparty\bgapp\common\debugdraw</Filter>
+    </ClInclude>
+    <ClInclude Include="..\3rdparty\bgapp\common\entry\cmd.h">
+      <Filter>3rdparty\bgapp\common\entry</Filter>
+    </ClInclude>
+    <ClInclude Include="..\3rdparty\bgapp\common\entry\dbg.h">
+      <Filter>3rdparty\bgapp\common\entry</Filter>
+    </ClInclude>
+    <ClInclude Include="..\3rdparty\bgapp\common\entry\dialog.h">
+      <Filter>3rdparty\bgapp\common\entry</Filter>
+    </ClInclude>
+    <ClInclude Include="..\3rdparty\bgapp\common\entry\entry.h">
+      <Filter>3rdparty\bgapp\common\entry</Filter>
+    </ClInclude>
+    <ClInclude Include="..\3rdparty\bgapp\common\entry\entry_p.h">
+      <Filter>3rdparty\bgapp\common\entry</Filter>
+    </ClInclude>
+    <ClInclude Include="..\3rdparty\bgapp\common\entry\input.h">
+      <Filter>3rdparty\bgapp\common\entry</Filter>
+    </ClInclude>
+    <ClInclude Include="..\3rdparty\bgapp\common\font\fs_font_distance_field.bin.h">
+      <Filter>3rdparty\bgapp\common\font</Filter>
+    </ClInclude>
+    <ClInclude Include="..\3rdparty\bgapp\common\font\fs_font_distance_field_subpixel.bin.h">
+      <Filter>3rdparty\bgapp\common\font</Filter>
+    </ClInclude>
+    <ClInclude Include="..\3rdparty\bgapp\common\font\text_buffer_manager.h">
+      <Filter>3rdparty\bgapp\common\font</Filter>
+    </ClInclude>
+    <ClInclude Include="..\3rdparty\bgapp\common\font\text_metrics.h">
+      <Filter>3rdparty\bgapp\common\font</Filter>
+    </ClInclude>
+    <ClInclude Include="..\3rdparty\bgapp\common\font\utf8.h">
+      <Filter>3rdparty\bgapp\common\font</Filter>
+    </ClInclude>
+    <ClInclude Include="..\3rdparty\bgapp\common\font\vs_font_basic.bin.h">
+      <Filter>3rdparty\bgapp\common\font</Filter>
+    </ClInclude>
+    <ClInclude Include="..\3rdparty\bgapp\common\font\vs_font_distance_field.bin.h">
+      <Filter>3rdparty\bgapp\common\font</Filter>
+    </ClInclude>
+    <ClInclude Include="..\3rdparty\bgapp\common\font\vs_font_distance_field_subpixel.bin.h">
+      <Filter>3rdparty\bgapp\common\font</Filter>
+    </ClInclude>
+    <ClInclude Include="..\3rdparty\bgapp\common\font\font_manager.h">
+      <Filter>3rdparty\bgapp\common\font</Filter>
+    </ClInclude>
+    <ClInclude Include="..\3rdparty\bgapp\common\font\fs_font_basic.bin.h">
+      <Filter>3rdparty\bgapp\common\font</Filter>
+    </ClInclude>
+    <ClInclude Include="..\3rdparty\bgapp\common\imgui\fs_ocornut_imgui.bin.h">
+      <Filter>3rdparty\bgapp\common\imgui</Filter>
+    </ClInclude>
+    <ClInclude Include="..\3rdparty\bgapp\common\imgui\icons_font_awesome.ttf.h">
+      <Filter>3rdparty\bgapp\common\imgui</Filter>
+    </ClInclude>
+    <ClInclude Include="..\3rdparty\bgapp\common\imgui\icons_kenney.ttf.h">
+      <Filter>3rdparty\bgapp\common\imgui</Filter>
+    </ClInclude>
+    <ClInclude Include="..\3rdparty\bgapp\common\imgui\imgui.h">
+      <Filter>3rdparty\bgapp\common\imgui</Filter>
+    </ClInclude>
+    <ClInclude Include="..\3rdparty\bgapp\common\imgui\roboto_regular.ttf.h">
+      <Filter>3rdparty\bgapp\common\imgui</Filter>
+    </ClInclude>
+    <ClInclude Include="..\3rdparty\bgapp\common\imgui\robotomono_regular.ttf.h">
+      <Filter>3rdparty\bgapp\common\imgui</Filter>
+    </ClInclude>
+    <ClInclude Include="..\3rdparty\bgapp\common\imgui\vs_imgui_color.bin.h">
+      <Filter>3rdparty\bgapp\common\imgui</Filter>
+    </ClInclude>
+    <ClInclude Include="..\3rdparty\bgapp\common\imgui\vs_imgui_cubemap.bin.h">
+      <Filter>3rdparty\bgapp\common\imgui</Filter>
+    </ClInclude>
+    <ClInclude Include="..\3rdparty\bgapp\common\imgui\vs_imgui_image.bin.h">
+      <Filter>3rdparty\bgapp\common\imgui</Filter>
+    </ClInclude>
+    <ClInclude Include="..\3rdparty\bgapp\common\imgui\vs_imgui_latlong.bin.h">
+      <Filter>3rdparty\bgapp\common\imgui</Filter>
+    </ClInclude>
+    <ClInclude Include="..\3rdparty\bgapp\common\imgui\vs_imgui_texture.bin.h">
+      <Filter>3rdparty\bgapp\common\imgui</Filter>
+    </ClInclude>
+    <ClInclude Include="..\3rdparty\bgapp\common\imgui\vs_ocornut_imgui.bin.h">
+      <Filter>3rdparty\bgapp\common\imgui</Filter>
+    </ClInclude>
+    <ClInclude Include="..\3rdparty\bgapp\common\imgui\droidsans.ttf.h">
+      <Filter>3rdparty\bgapp\common\imgui</Filter>
+    </ClInclude>
+    <ClInclude Include="..\3rdparty\bgapp\common\imgui\fs_imgui_color.bin.h">
+      <Filter>3rdparty\bgapp\common\imgui</Filter>
+    </ClInclude>
+    <ClInclude Include="..\3rdparty\bgapp\common\imgui\fs_imgui_cubemap.bin.h">
+      <Filter>3rdparty\bgapp\common\imgui</Filter>
+    </ClInclude>
+    <ClInclude Include="..\3rdparty\bgapp\common\imgui\fs_imgui_image.bin.h">
+      <Filter>3rdparty\bgapp\common\imgui</Filter>
+    </ClInclude>
+    <ClInclude Include="..\3rdparty\bgapp\common\imgui\fs_imgui_image_swizz.bin.h">
+      <Filter>3rdparty\bgapp\common\imgui</Filter>
+    </ClInclude>
+    <ClInclude Include="..\3rdparty\bgapp\common\imgui\fs_imgui_latlong.bin.h">
+      <Filter>3rdparty\bgapp\common\imgui</Filter>
+    </ClInclude>
+    <ClInclude Include="..\3rdparty\bgapp\common\imgui\fs_imgui_texture.bin.h">
+      <Filter>3rdparty\bgapp\common\imgui</Filter>
+    </ClInclude>
+    <ClInclude Include="..\3rdparty\bgapp\common\nanovg\fs_nanovg_fill.bin.h">
+      <Filter>3rdparty\bgapp\common\nanovg</Filter>
+    </ClInclude>
+    <ClInclude Include="..\3rdparty\bgapp\common\nanovg\nanovg.h">
+      <Filter>3rdparty\bgapp\common\nanovg</Filter>
+    </ClInclude>
+    <ClInclude Include="..\3rdparty\bgapp\common\nanovg\nanovg_bgfx.h">
+      <Filter>3rdparty\bgapp\common\nanovg</Filter>
+    </ClInclude>
+    <ClInclude Include="..\3rdparty\bgapp\common\nanovg\vs_nanovg_fill.bin.h">
+      <Filter>3rdparty\bgapp\common\nanovg</Filter>
+    </ClInclude>
+    <ClInclude Include="..\3rdparty\bgapp\common\nanovg\fontstash.h">
+      <Filter>3rdparty\bgapp\common\nanovg</Filter>
+    </ClInclude>
+    <ClInclude Include="..\3rdparty\bgapp\common\ps\particle_system.h">
+      <Filter>3rdparty\bgapp\common\ps</Filter>
+    </ClInclude>
+    <ClInclude Include="..\3rdparty\bgapp\common\ps\vs_particle.bin.h">
+      <Filter>3rdparty\bgapp\common\ps</Filter>
+    </ClInclude>
+    <ClInclude Include="..\3rdparty\bgapp\common\ps\fs_particle.bin.h">
+      <Filter>3rdparty\bgapp\common\ps</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\audio_writers.h">
+      <Filter>source</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\entry_point.h">
+      <Filter>source</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\presentation_modules.h">
+      <Filter>source</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\audio_module.h">
+      <Filter>source</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\audio_stream.h">
+      <Filter>source</Filter>
+    </ClInclude>
+    <ClInclude Include="..\3rdparty\inc\bx\spscqueue.h">
+      <Filter>3rdparty\inc\bx</Filter>
+    </ClInclude>
+    <ClInclude Include="..\3rdparty\inc\bx\string.h">
+      <Filter>3rdparty\inc\bx</Filter>
+    </ClInclude>
+    <ClInclude Include="..\3rdparty\inc\bx\thread.h">
+      <Filter>3rdparty\inc\bx</Filter>
+    </ClInclude>
+    <ClInclude Include="..\3rdparty\inc\bx\timer.h">
+      <Filter>3rdparty\inc\bx</Filter>
+    </ClInclude>
+    <ClInclude Include="..\3rdparty\inc\bx\uint32_t.h">
+      <Filter>3rdparty\inc\bx</Filter>
+    </ClInclude>
+    <ClInclude Include="..\3rdparty\inc\bx\url.h">
+      <Filter>3rdparty\inc\bx</Filter>
+    </ClInclude>
+    <ClInclude Include="..\3rdparty\inc\bx\allocator.h">
+      <Filter>3rdparty\inc\bx</Filter>
+    </ClInclude>
+    <ClInclude Include="..\3rdparty\inc\bx\bx.h">
+      <Filter>3rdparty\inc\bx</Filter>
+    </ClInclude>
+    <ClInclude Include="..\3rdparty\inc\bx\commandline.h">
+      <Filter>3rdparty\inc\bx</Filter>
+    </ClInclude>
+    <ClInclude Include="..\3rdparty\inc\bx\config.h">
+      <Filter>3rdparty\inc\bx</Filter>
+    </ClInclude>
+    <ClInclude Include="..\3rdparty\inc\bx\cpu.h">
+      <Filter>3rdparty\inc\bx</Filter>
+    </ClInclude>
+    <ClInclude Include="..\3rdparty\inc\bx\debug.h">
+      <Filter>3rdparty\inc\bx</Filter>
+    </ClInclude>
+    <ClInclude Include="..\3rdparty\inc\bx\easing.h">
+      <Filter>3rdparty\inc\bx</Filter>
+    </ClInclude>
+    <ClInclude Include="..\3rdparty\inc\bx\endian.h">
+      <Filter>3rdparty\inc\bx</Filter>
+    </ClInclude>
+    <ClInclude Include="..\3rdparty\inc\bx\error.h">
+      <Filter>3rdparty\inc\bx</Filter>
+    </ClInclude>
+    <ClInclude Include="..\3rdparty\inc\bx\file.h">
+      <Filter>3rdparty\inc\bx</Filter>
+    </ClInclude>
+    <ClInclude Include="..\3rdparty\inc\bx\filepath.h">
+      <Filter>3rdparty\inc\bx</Filter>
+    </ClInclude>
+    <ClInclude Include="..\3rdparty\inc\bx\float4x4_t.h">
+      <Filter>3rdparty\inc\bx</Filter>
+    </ClInclude>
+    <ClInclude Include="..\3rdparty\inc\bx\handlealloc.h">
+      <Filter>3rdparty\inc\bx</Filter>
+    </ClInclude>
+    <ClInclude Include="..\3rdparty\inc\bx\hash.h">
+      <Filter>3rdparty\inc\bx</Filter>
+    </ClInclude>
+    <ClInclude Include="..\3rdparty\inc\bx\macros.h">
+      <Filter>3rdparty\inc\bx</Filter>
+    </ClInclude>
+    <ClInclude Include="..\3rdparty\inc\bx\maputil.h">
+      <Filter>3rdparty\inc\bx</Filter>
+    </ClInclude>
+    <ClInclude Include="..\3rdparty\inc\bx\math.h">
+      <Filter>3rdparty\inc\bx</Filter>
+    </ClInclude>
+    <ClInclude Include="..\3rdparty\inc\bx\mpscqueue.h">
+      <Filter>3rdparty\inc\bx</Filter>
+    </ClInclude>
+    <ClInclude Include="..\3rdparty\inc\bx\mutex.h">
+      <Filter>3rdparty\inc\bx</Filter>
+    </ClInclude>
+    <ClInclude Include="..\3rdparty\inc\bx\os.h">
+      <Filter>3rdparty\inc\bx</Filter>
+    </ClInclude>
+    <ClInclude Include="..\3rdparty\inc\bx\pixelformat.h">
+      <Filter>3rdparty\inc\bx</Filter>
+    </ClInclude>
+    <ClInclude Include="..\3rdparty\inc\bx\platform.h">
+      <Filter>3rdparty\inc\bx</Filter>
+    </ClInclude>
+    <ClInclude Include="..\3rdparty\inc\bx\process.h">
+      <Filter>3rdparty\inc\bx</Filter>
+    </ClInclude>
+    <ClInclude Include="..\3rdparty\inc\bx\readerwriter.h">
+      <Filter>3rdparty\inc\bx</Filter>
+    </ClInclude>
+    <ClInclude Include="..\3rdparty\inc\bx\ringbuffer.h">
+      <Filter>3rdparty\inc\bx</Filter>
+    </ClInclude>
+    <ClInclude Include="..\3rdparty\inc\bx\rng.h">
+      <Filter>3rdparty\inc\bx</Filter>
+    </ClInclude>
+    <ClInclude Include="..\3rdparty\inc\bx\semaphore.h">
+      <Filter>3rdparty\inc\bx</Filter>
+    </ClInclude>
+    <ClInclude Include="..\3rdparty\inc\bx\settings.h">
+      <Filter>3rdparty\inc\bx</Filter>
+    </ClInclude>
+    <ClInclude Include="..\3rdparty\inc\bx\simd_t.h">
+      <Filter>3rdparty\inc\bx</Filter>
+    </ClInclude>
+    <ClInclude Include="..\3rdparty\inc\bx\sort.h">
+      <Filter>3rdparty\inc\bx</Filter>
+    </ClInclude>
+    <ClInclude Include="..\3rdparty\inc\bgfx\embedded_shader.h">
+      <Filter>3rdparty\inc\bgfx</Filter>
+    </ClInclude>
+    <ClInclude Include="..\3rdparty\inc\bgfx\platform.h">
+      <Filter>3rdparty\inc\bgfx</Filter>
+    </ClInclude>
+    <ClInclude Include="..\3rdparty\inc\bgfx\bgfx.h">
+      <Filter>3rdparty\inc\bgfx</Filter>
+    </ClInclude>
+    <ClInclude Include="..\3rdparty\inc\bgfx\defines.h">
+      <Filter>3rdparty\inc\bgfx</Filter>
+    </ClInclude>
+    <ClInclude Include="..\3rdparty\inc\bgfx\c99\bgfx.h">
+      <Filter>3rdparty\inc\bgfx\C99</Filter>
+    </ClInclude>
+    <ClInclude Include="..\3rdparty\inc\bimg\decode.h">
+      <Filter>3rdparty\inc\bimg</Filter>
+    </ClInclude>
+    <ClInclude Include="..\3rdparty\inc\bimg\encode.h">
+      <Filter>3rdparty\inc\bimg</Filter>
+    </ClInclude>
+    <ClInclude Include="..\3rdparty\inc\bimg\bimg.h">
+      <Filter>3rdparty\inc\bimg</Filter>
+    </ClInclude>
+    <ClInclude Include="..\3rdparty\inc\fmod\fmod_errors.h">
+      <Filter>3rdparty\inc\fmod</Filter>
+    </ClInclude>
+    <ClInclude Include="..\3rdparty\inc\fmod\fmod_output.h">
+      <Filter>3rdparty\inc\fmod</Filter>
+    </ClInclude>
+    <ClInclude Include="..\3rdparty\inc\fmod\fmod.h">
+      <Filter>3rdparty\inc\fmod</Filter>
+    </ClInclude>
+    <ClInclude Include="..\3rdparty\inc\fmod\fmod.hpp">
+      <Filter>3rdparty\inc\fmod</Filter>
+    </ClInclude>
+    <ClInclude Include="..\3rdparty\inc\fmod\fmod_codec.h">
+      <Filter>3rdparty\inc\fmod</Filter>
+    </ClInclude>
+    <ClInclude Include="..\3rdparty\inc\fmod\fmod_common.h">
+      <Filter>3rdparty\inc\fmod</Filter>
+    </ClInclude>
+    <ClInclude Include="..\3rdparty\inc\fmod\fmod_dsp.h">
+      <Filter>3rdparty\inc\fmod</Filter>
+    </ClInclude>
+    <ClInclude Include="..\3rdparty\inc\fmod\fmod_dsp_effects.h">
+      <Filter>3rdparty\inc\fmod</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="..\3rdparty\bgapp\common\common.sh">
+      <Filter>3rdparty\bgapp\common</Filter>
+    </None>
+    <None Include="..\3rdparty\bgapp\common\shaderlib.sh">
+      <Filter>3rdparty\bgapp\common</Filter>
+    </None>
+    <None Include="..\3rdparty\bgapp\common\debugdraw\fs_debugdraw_lines.sc">
+      <Filter>3rdparty\bgapp\common\debugdraw</Filter>
+    </None>
+    <None Include="..\3rdparty\bgapp\common\debugdraw\fs_debugdraw_lines_stipple.sc">
+      <Filter>3rdparty\bgapp\common\debugdraw</Filter>
+    </None>
+    <None Include="..\3rdparty\bgapp\common\debugdraw\makefile">
+      <Filter>3rdparty\bgapp\common\debugdraw</Filter>
+    </None>
+    <None Include="..\3rdparty\bgapp\common\debugdraw\varying.def.sc">
+      <Filter>3rdparty\bgapp\common\debugdraw</Filter>
+    </None>
+    <None Include="..\3rdparty\bgapp\common\debugdraw\vs_debugdraw_fill.sc">
+      <Filter>3rdparty\bgapp\common\debugdraw</Filter>
+    </None>
+    <None Include="..\3rdparty\bgapp\common\debugdraw\vs_debugdraw_fill_lit.sc">
+      <Filter>3rdparty\bgapp\common\debugdraw</Filter>
+    </None>
+    <None Include="..\3rdparty\bgapp\common\debugdraw\vs_debugdraw_fill_lit_mesh.sc">
+      <Filter>3rdparty\bgapp\common\debugdraw</Filter>
+    </None>
+    <None Include="..\3rdparty\bgapp\common\debugdraw\vs_debugdraw_fill_mesh.sc">
+      <Filter>3rdparty\bgapp\common\debugdraw</Filter>
+    </None>
+    <None Include="..\3rdparty\bgapp\common\debugdraw\vs_debugdraw_fill_texture.sc">
+      <Filter>3rdparty\bgapp\common\debugdraw</Filter>
+    </None>
+    <None Include="..\3rdparty\bgapp\common\debugdraw\vs_debugdraw_lines.sc">
+      <Filter>3rdparty\bgapp\common\debugdraw</Filter>
+    </None>
+    <None Include="..\3rdparty\bgapp\common\debugdraw\vs_debugdraw_lines_stipple.sc">
+      <Filter>3rdparty\bgapp\common\debugdraw</Filter>
+    </None>
+    <None Include="..\3rdparty\bgapp\common\debugdraw\fs_debugdraw_fill.sc">
+      <Filter>3rdparty\bgapp\common\debugdraw</Filter>
+    </None>
+    <None Include="..\3rdparty\bgapp\common\debugdraw\fs_debugdraw_fill_lit.sc">
+      <Filter>3rdparty\bgapp\common\debugdraw</Filter>
+    </None>
+    <None Include="..\3rdparty\bgapp\common\debugdraw\fs_debugdraw_fill_texture.sc">
+      <Filter>3rdparty\bgapp\common\debugdraw</Filter>
+    </None>
+    <None Include="..\3rdparty\bgapp\common\entry\dialog_darwin.mm">
+      <Filter>3rdparty\bgapp\common\entry</Filter>
+    </None>
+    <None Include="..\3rdparty\bgapp\common\entry\entry_ios.mm">
+      <Filter>3rdparty\bgapp\common\entry</Filter>
+    </None>
+    <None Include="..\3rdparty\bgapp\common\entry\entry_osx.mm">
+      <Filter>3rdparty\bgapp\common\entry</Filter>
+    </None>
+    <None Include="..\3rdparty\bgapp\common\entry\entry_winrt.cx">
+      <Filter>3rdparty\bgapp\common\entry</Filter>
+    </None>
+    <None Include="..\3rdparty\bgapp\common\font\fs_font_distance_field.sc">
+      <Filter>3rdparty\bgapp\common\font</Filter>
+    </None>
+    <None Include="..\3rdparty\bgapp\common\font\fs_font_distance_field_subpixel.sc">
+      <Filter>3rdparty\bgapp\common\font</Filter>
+    </None>
+    <None Include="..\3rdparty\bgapp\common\font\makefile">
+      <Filter>3rdparty\bgapp\common\font</Filter>
+    </None>
+    <None Include="..\3rdparty\bgapp\common\font\varying.def.sc">
+      <Filter>3rdparty\bgapp\common\font</Filter>
+    </None>
+    <None Include="..\3rdparty\bgapp\common\font\vs_font_basic.sc">
+      <Filter>3rdparty\bgapp\common\font</Filter>
+    </None>
+    <None Include="..\3rdparty\bgapp\common\font\vs_font_distance_field.sc">
+      <Filter>3rdparty\bgapp\common\font</Filter>
+    </None>
+    <None Include="..\3rdparty\bgapp\common\font\vs_font_distance_field_subpixel.sc">
+      <Filter>3rdparty\bgapp\common\font</Filter>
+    </None>
+    <None Include="..\3rdparty\bgapp\common\font\fs_font_basic.sc">
+      <Filter>3rdparty\bgapp\common\font</Filter>
+    </None>
+    <None Include="..\3rdparty\bgapp\common\imgui\fs_ocornut_imgui.sc">
+      <Filter>3rdparty\bgapp\common\imgui</Filter>
+    </None>
+    <None Include="..\3rdparty\bgapp\common\imgui\makefile">
+      <Filter>3rdparty\bgapp\common\imgui</Filter>
+    </None>
+    <None Include="..\3rdparty\bgapp\common\imgui\varying.def.sc">
+      <Filter>3rdparty\bgapp\common\imgui</Filter>
+    </None>
+    <None Include="..\3rdparty\bgapp\common\imgui\vs_imgui_color.sc">
+      <Filter>3rdparty\bgapp\common\imgui</Filter>
+    </None>
+    <None Include="..\3rdparty\bgapp\common\imgui\vs_imgui_cubemap.sc">
+      <Filter>3rdparty\bgapp\common\imgui</Filter>
+    </None>
+    <None Include="..\3rdparty\bgapp\common\imgui\vs_imgui_image.sc">
+      <Filter>3rdparty\bgapp\common\imgui</Filter>
+    </None>
+    <None Include="..\3rdparty\bgapp\common\imgui\vs_imgui_latlong.sc">
+      <Filter>3rdparty\bgapp\common\imgui</Filter>
+    </None>
+    <None Include="..\3rdparty\bgapp\common\imgui\vs_imgui_texture.sc">
+      <Filter>3rdparty\bgapp\common\imgui</Filter>
+    </None>
+    <None Include="..\3rdparty\bgapp\common\imgui\vs_ocornut_imgui.sc">
+      <Filter>3rdparty\bgapp\common\imgui</Filter>
+    </None>
+    <None Include="..\3rdparty\bgapp\common\imgui\fs_imgui_color.sc">
+      <Filter>3rdparty\bgapp\common\imgui</Filter>
+    </None>
+    <None Include="..\3rdparty\bgapp\common\imgui\fs_imgui_cubemap.sc">
+      <Filter>3rdparty\bgapp\common\imgui</Filter>
+    </None>
+    <None Include="..\3rdparty\bgapp\common\imgui\fs_imgui_image.sc">
+      <Filter>3rdparty\bgapp\common\imgui</Filter>
+    </None>
+    <None Include="..\3rdparty\bgapp\common\imgui\fs_imgui_image_swizz.sc">
+      <Filter>3rdparty\bgapp\common\imgui</Filter>
+    </None>
+    <None Include="..\3rdparty\bgapp\common\imgui\fs_imgui_latlong.sc">
+      <Filter>3rdparty\bgapp\common\imgui</Filter>
+    </None>
+    <None Include="..\3rdparty\bgapp\common\imgui\fs_imgui_texture.sc">
+      <Filter>3rdparty\bgapp\common\imgui</Filter>
+    </None>
+    <None Include="..\3rdparty\bgapp\common\nanovg\fs_nanovg_fill.sc">
+      <Filter>3rdparty\bgapp\common\nanovg</Filter>
+    </None>
+    <None Include="..\3rdparty\bgapp\common\nanovg\makefile">
+      <Filter>3rdparty\bgapp\common\nanovg</Filter>
+    </None>
+    <None Include="..\3rdparty\bgapp\common\nanovg\varying.def.sc">
+      <Filter>3rdparty\bgapp\common\nanovg</Filter>
+    </None>
+    <None Include="..\3rdparty\bgapp\common\nanovg\vs_nanovg_fill.sc">
+      <Filter>3rdparty\bgapp\common\nanovg</Filter>
+    </None>
+    <None Include="..\3rdparty\bgapp\common\ps\varying.def.sc">
+      <Filter>3rdparty\bgapp\common\ps</Filter>
+    </None>
+    <None Include="..\3rdparty\bgapp\common\ps\vs_particle.sc">
+      <Filter>3rdparty\bgapp\common\ps</Filter>
+    </None>
+    <None Include="..\3rdparty\bgapp\common\ps\fs_particle.sc">
+      <Filter>3rdparty\bgapp\common\ps</Filter>
+    </None>
+    <None Include="..\3rdparty\inc\bx\inline\simd128_swizzle.inl">
+      <Filter>3rdparty\inc\bx\inline</Filter>
+    </None>
+    <None Include="..\3rdparty\inc\bx\inline\simd256_avx.inl">
+      <Filter>3rdparty\inc\bx\inline</Filter>
+    </None>
+    <None Include="..\3rdparty\inc\bx\inline\simd256_ref.inl">
+      <Filter>3rdparty\inc\bx\inline</Filter>
+    </None>
+    <None Include="..\3rdparty\inc\bx\inline\sort.inl">
+      <Filter>3rdparty\inc\bx\inline</Filter>
+    </None>
+    <None Include="..\3rdparty\inc\bx\inline\spscqueue.inl">
+      <Filter>3rdparty\inc\bx\inline</Filter>
+    </None>
+    <None Include="..\3rdparty\inc\bx\inline\string.inl">
+      <Filter>3rdparty\inc\bx\inline</Filter>
+    </None>
+    <None Include="..\3rdparty\inc\bx\inline\uint32_t.inl">
+      <Filter>3rdparty\inc\bx\inline</Filter>
+    </None>
+    <None Include="..\3rdparty\inc\bx\inline\allocator.inl">
+      <Filter>3rdparty\inc\bx\inline</Filter>
+    </None>
+    <None Include="..\3rdparty\inc\bx\inline\bx.inl">
+      <Filter>3rdparty\inc\bx\inline</Filter>
+    </None>
+    <None Include="..\3rdparty\inc\bx\inline\cpu.inl">
+      <Filter>3rdparty\inc\bx\inline</Filter>
+    </None>
+    <None Include="..\3rdparty\inc\bx\inline\easing.inl">
+      <Filter>3rdparty\inc\bx\inline</Filter>
+    </None>
+    <None Include="..\3rdparty\inc\bx\inline\endian.inl">
+      <Filter>3rdparty\inc\bx\inline</Filter>
+    </None>
+    <None Include="..\3rdparty\inc\bx\inline\error.inl">
+      <Filter>3rdparty\inc\bx\inline</Filter>
+    </None>
+    <None Include="..\3rdparty\inc\bx\inline\float4x4_t.inl">
+      <Filter>3rdparty\inc\bx\inline</Filter>
+    </None>
+    <None Include="..\3rdparty\inc\bx\inline\handlealloc.inl">
+      <Filter>3rdparty\inc\bx\inline</Filter>
+    </None>
+    <None Include="..\3rdparty\inc\bx\inline\hash.inl">
+      <Filter>3rdparty\inc\bx\inline</Filter>
+    </None>
+    <None Include="..\3rdparty\inc\bx\inline\math.inl">
+      <Filter>3rdparty\inc\bx\inline</Filter>
+    </None>
+    <None Include="..\3rdparty\inc\bx\inline\mpscqueue.inl">
+      <Filter>3rdparty\inc\bx\inline</Filter>
+    </None>
+    <None Include="..\3rdparty\inc\bx\inline\mutex.inl">
+      <Filter>3rdparty\inc\bx\inline</Filter>
+    </None>
+    <None Include="..\3rdparty\inc\bx\inline\pixelformat.inl">
+      <Filter>3rdparty\inc\bx\inline</Filter>
+    </None>
+    <None Include="..\3rdparty\inc\bx\inline\readerwriter.inl">
+      <Filter>3rdparty\inc\bx\inline</Filter>
+    </None>
+    <None Include="..\3rdparty\inc\bx\inline\ringbuffer.inl">
+      <Filter>3rdparty\inc\bx\inline</Filter>
+    </None>
+    <None Include="..\3rdparty\inc\bx\inline\rng.inl">
+      <Filter>3rdparty\inc\bx\inline</Filter>
+    </None>
+    <None Include="..\3rdparty\inc\bx\inline\simd_ni.inl">
+      <Filter>3rdparty\inc\bx\inline</Filter>
+    </None>
+    <None Include="..\3rdparty\inc\bx\inline\simd128_langext.inl">
+      <Filter>3rdparty\inc\bx\inline</Filter>
+    </None>
+    <None Include="..\3rdparty\inc\bx\inline\simd128_neon.inl">
+      <Filter>3rdparty\inc\bx\inline</Filter>
+    </None>
+    <None Include="..\3rdparty\inc\bx\inline\simd128_ref.inl">
+      <Filter>3rdparty\inc\bx\inline</Filter>
+    </None>
+    <None Include="..\3rdparty\inc\bx\inline\simd128_sse.inl">
+      <Filter>3rdparty\inc\bx\inline</Filter>
+    </None>
+  </ItemGroup>
+</Project>

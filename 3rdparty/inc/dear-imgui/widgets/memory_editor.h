@@ -1,3 +1,5 @@
+#include <string.h>
+
 namespace ImGui
 {
     struct MemoryEditor
@@ -17,8 +19,8 @@ namespace ImGui
             Rows = 16;
             DataEditingAddr = -1;
             DataEditingTakeFocus = false;
-            strcpy(DataInput, "");
-            strcpy(AddrInput, "");
+            strcpy_s(DataInput, "");
+            strcpy_s(AddrInput, "");
         }
 
         void Draw(void* mem_data, int mem_size, int base_display_addr = 0);
